@@ -1,0 +1,9 @@
+*Language
+ExpressJS : https://expressjs.com/en/guide/routing.html
+NodeJS: https://nodejs.org/en/download/ (add PATH needed )
+Install Nodemon(auto run ) :npm install -g nodemon
+
+*Database
+MongoDB :https://www.mongodb.com/
+Install mongoose : $ npm install mongoose
+
