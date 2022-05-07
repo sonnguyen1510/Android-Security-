@@ -12,7 +12,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public interface User_Interface {
+public interface    User_Interface {
     //http://localhost:3000/v1/User/get_all_user
 
     //getUser

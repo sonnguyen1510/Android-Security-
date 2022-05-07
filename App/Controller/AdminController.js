@@ -14,7 +14,7 @@ const AdminController = {
 
     CheckAdmin : async(req,res) =>{
         try {
-            const FindAdmin = await admin.find({
+            const FindAdmin = await admin.findOne({
                 User_name : req.params.User_name,
                 Password : req.params.Password
             })
@@ -22,6 +22,15 @@ const AdminController = {
             console.log("Find succcess")
         } catch (error) {
            console.log("No admin") 
+        }
+    },
+
+    GetAdminByID : async(req,res) =>{
+        try {
+            const findAdmin = await admin.findById(req.params.AdminID)
+            res.json(findAdmin)
+        } catch (error) {
+            console.log("No admin") 
         }
     }
 }

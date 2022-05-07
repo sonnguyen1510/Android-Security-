@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.learnapi">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="APITester"
+        android:label="Final_Project"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:theme="@style/Theme.LearnAPI">
+        android:theme="@style/Theme.LearnAPI"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".UI_Control.Main_form_control"
+            android:exported="true"
+            android:label="@string/title_activity_main_form_control"
+            android:theme="@style/Theme.LearnAPI.NoActionBar" />
         <activity
             android:name=".UI_Control.MainActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".UI_Control.Login_Controll"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

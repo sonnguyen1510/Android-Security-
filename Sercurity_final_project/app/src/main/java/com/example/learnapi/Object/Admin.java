@@ -9,13 +9,13 @@ public class Admin {
     private boolean Gender;
     private int __v;
 
-    public Admin(String _id, String name, String user_name, String age, String birthday, boolean gender, int __v) {
+    public Admin(String _id, String Name, String User_name, String Age, String Birthday, boolean Gender, int __v) {
         this._id = _id;
-        Name = name;
-        User_name = user_name;
-        Age = age;
-        Birthday = birthday;
-        Gender = gender;
+        this.Name = Name;
+        this.User_name = User_name;
+        this.Age = Age;
+        this.Birthday = Birthday;
+        this.Gender = Gender;
         this.__v = __v;
     }
 

@@ -5,6 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+    <com.scwang.wave.MultiWaveHeader
+        android:id="@+id/waveHeader"
+        android:layout_width="416dp"
+        android:layout_height="318dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mwhCloseColor="#03A9F4"
+        app:mwhStartColor="#00BCD4"
+        app:mwhWaveHeight="60dp"
+
+        >
+
+    </com.scwang.wave.MultiWaveHeader>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="430dp"
@@ -16,7 +35,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextTextPersonName"
             android:layout_width="313dp"
-            android:layout_height="45dp"
+            android:layout_height="55dp"
             android:layout_marginTop="80dp"
 
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +56,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/Log_In"
             android:layout_width="266dp"
             android:layout_height="43dp"
             android:layout_marginTop="40dp"
@@ -52,7 +71,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextTextPassword"
             android:layout_width="315dp"
-            android:layout_height="45dp"
+            android:layout_height="55dp"
             android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +117,7 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button">
+            app:layout_constraintTop_toBottomOf="@+id/Log_In">
 
             <TextView
                 android:id="@+id/tvText"
@@ -129,10 +148,10 @@
         </RelativeLayout>
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/Log_In_with_Iris"
             android:layout_width="53dp"
             android:layout_height="52dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
