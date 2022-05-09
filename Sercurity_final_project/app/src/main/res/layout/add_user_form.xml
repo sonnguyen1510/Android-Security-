@@ -5,7 +5,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="false"
     >
 
     <ScrollView
@@ -235,6 +234,7 @@
                     android:id="@+id/SignInButton"
                     android:layout_width="150dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@drawable/login_popup_window_button_design"

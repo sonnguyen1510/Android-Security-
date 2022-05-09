@@ -1,4 +1,4 @@
-package com.example.learnapi.UI_Control;
+package com.example.IrisREC.UI_Control;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -10,13 +10,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -28,14 +25,13 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.learnapi.Data.APIInterface.User_Interface;
-import com.example.learnapi.Data.APIService.RetrofitClient;
-import com.example.learnapi.Object.User;
-import com.example.learnapi.R;
+import com.example.IrisREC.Data.APIInterface.User_Interface;
+import com.example.IrisREC.Data.APIService.RetrofitClient;
+import com.example.IrisREC.Object.User;
+import com.example.IrisREC.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -70,7 +66,7 @@ public class Add_user_Control extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_user_form);
-        String AdminID = getIntent().getStringExtra("From_MainForm");
+        String AdminID = getIntent().getStringExtra("Admin Id");
         Log.e("Admin id" , AdminID);
         TextView AdminName = findViewById(R.id.Admin_name);
 
@@ -94,6 +90,7 @@ public class Add_user_Control extends AppCompatActivity {
             public void onClick(View view) {
                 Intent BackToHome = new Intent(view.getContext(),MainFormClass);
                 BackToHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                BackToHome.putExtra("Admin Id",AdminID);
                 view.getContext().startActivity(BackToHome);
             }
         });
@@ -182,15 +179,13 @@ public class Add_user_Control extends AppCompatActivity {
         SignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder Resule = new AlertDialog.Builder(view.getContext());
-
+                AlertDialog.Builder Result = new AlertDialog.Builder(view.getContext());
                 if(IsFullInformation()){
                     User_Interface user_interface = RetrofitClient.getRetrofit().create(User_Interface.class);
                     Call<User> CallUserAPI = user_interface.AddNewUser(new User(
                        null,
                             Name.getText().toString(),
                             Age.getText().toString(),
-
                             Birthday.getText().toString(),
                             Email.getText().toString(),
                             Gender(),
@@ -202,13 +197,14 @@ public class Add_user_Control extends AppCompatActivity {
                         public void onResponse(Call<User> call, Response<User> response) {
                             User IsUserCreated = response.body();
                             if(IsUserCreated != null){
-                                Resule.setTitle("Result")
+                                Result.setTitle("Result")
                                         .setMessage("Add User Successful!")
                                         .setNegativeButton("Home", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 Intent BackToHome = new Intent(view.getContext(),MainFormClass);
                                                 BackToHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                BackToHome.putExtra("Admin Id",AdminID);
                                                 view.getContext().startActivity(BackToHome);
                                             }
                                         })
@@ -216,41 +212,41 @@ public class Add_user_Control extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 ClearData();
+                                                dialogInterface.cancel();
                                             }
                                         })
                                         .create().show();
                             }
                             else{
-                                Resule.setTitle("Result")
+                                Result.setTitle("Result")
                                         .setMessage("Add User Fail!")
                                         .setNegativeButton("Home", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 Intent BackToHome = new Intent(view.getContext(),MainFormClass);
                                                 BackToHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                BackToHome.putExtra("Admin Id",AdminID);
                                                 view.getContext().startActivity(BackToHome);
                                             }
                                         })
                                         .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                ClearData();
+                                                dialogInterface.cancel();
                                             }
                                         })
                                         .create().show();
                             }
                         }
-
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
                             Log.e("API","Add user fail");
                         }
                     });
+                }else{
+                    Log.e("Info","Complete info");
                 }
-
             }
-
-
         });
     }
 
@@ -264,6 +260,8 @@ public class Add_user_Control extends AppCompatActivity {
                 final Bitmap ImageEyeData= BitmapFactory.decodeStream(imageStream);
 
                 ImageEyeView.setImageBitmap(ImageEyeData);
+                this.ImageEyeData = ImageEyeData;
+                IsUploadedImage = true;
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();

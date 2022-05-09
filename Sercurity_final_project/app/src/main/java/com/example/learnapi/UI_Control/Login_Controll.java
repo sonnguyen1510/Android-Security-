@@ -1,4 +1,4 @@
-package com.example.learnapi.UI_Control;
+package com.example.IrisREC.UI_Control;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +15,10 @@ import android.widget.PopupWindow;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.learnapi.Data.APIInterface.Admin_Interface;
-import com.example.learnapi.Data.APIService.RetrofitClient;
-import com.example.learnapi.Object.Admin;
-import com.example.learnapi.R;
+import com.example.IrisREC.Data.APIInterface.Admin_Interface;
+import com.example.IrisREC.Data.APIService.RetrofitClient;
+import com.example.IrisREC.Object.Admin;
+import com.example.IrisREC.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,7 +83,7 @@ public class Login_Controll extends AppCompatActivity {
                         }
                         else{
                             Intent goToAdminForm = new Intent(view.getContext(),Main_form_control.class);
-                            goToAdminForm.putExtra("From_LogInForm",admin_check.get_id());
+                            goToAdminForm.putExtra("Admin Id",admin_check.get_id());
                             view.getContext().startActivity(goToAdminForm);
                         }
                     }
@@ -93,6 +93,18 @@ public class Login_Controll extends AppCompatActivity {
                         Log.e("Call Admin Api","Admin check fail");
                     }
                 });
+            }
+        });
+
+        //----------------------------------IRIS RECOGNITION---------------------------------
+        Class IrisCheck = Check_iris_recognition_Control.class;
+        Iris.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent DirectToCheck_Iris = new Intent(view.getContext(),IrisCheck);
+                String Message = "Request_Iris_Check";
+                DirectToCheck_Iris.putExtra("From_LoginControl",Message);
+                view.getContext().startActivity(DirectToCheck_Iris);
             }
         });
     }

@@ -1,6 +1,6 @@
-package com.example.learnapi.Data.APIInterface;
+package com.example.IrisREC.Data.APIInterface;
 
-import com.example.learnapi.Object.User;
+import com.example.IrisREC.Object.User;
 
 import java.util.List;
 

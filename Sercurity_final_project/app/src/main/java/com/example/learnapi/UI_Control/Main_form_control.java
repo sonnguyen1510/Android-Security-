@@ -1,4 +1,4 @@
-package com.example.learnapi.UI_Control;
+package com.example.IrisREC.UI_Control;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.learnapi.Data.APIInterface.Admin_Interface;
-import com.example.learnapi.Data.APIService.RetrofitClient;
-import com.example.learnapi.Object.Admin;
-import com.example.learnapi.R;
+import com.example.IrisREC.Data.APIInterface.Admin_Interface;
+import com.example.IrisREC.Data.APIService.RetrofitClient;
+import com.example.IrisREC.Object.Admin;
+import com.example.IrisREC.R;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
@@ -36,7 +36,7 @@ public class Main_form_control extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_form);
-        String AdminID = getIntent().getStringExtra("From_LogInForm");
+        String AdminID = getIntent().getStringExtra("Admin Id");
         Log.e("Admin id" , AdminID);
         AdminName = findViewById(R.id.Admin_name);
 
@@ -69,7 +69,7 @@ public class Main_form_control extends AppCompatActivity {
             public void onClick(View view) {
                 Intent AddUser = new Intent(view.getContext(),AddUser_Activity);
                 AddUser.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                AddUser.putExtra("From_MainForm",admin.get_id());
+                AddUser.putExtra("Admin Id",admin.get_id());
                 view.getContext().startActivity(AddUser);
             }
         });

@@ -9,7 +9,7 @@
 
     <com.scwang.wave.MultiWaveHeader
         android:id="@+id/waveHeader"
-        android:layout_width="416dp"
+        android:layout_width="match_parent"
         android:layout_height="318dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"

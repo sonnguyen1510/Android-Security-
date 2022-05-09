@@ -1,6 +1,6 @@
-package com.example.learnapi.Data.APIService;
+package com.example.IrisREC.Data.APIService;
 
-import com.example.learnapi.Data.Network.CreateAPILink;
+import com.example.IrisREC.Data.Network.CreateAPILink;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

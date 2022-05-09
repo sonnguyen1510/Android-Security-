@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.learnapi">
+    package="com.example.IrisREC">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,7 +14,11 @@
         android:theme="@style/Theme.LearnAPI"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".UI_Control.Check_iris_recognition_Control"
+            android:exported="true" />
+        <activity
             android:name=".UI_Control.Add_user_Control"
+            android:theme="@style/Theme.LearnAPI.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".UI_Control.Main_form_control"

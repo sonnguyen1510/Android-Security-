@@ -1,4 +1,4 @@
-package com.example.learnapi.UI_Control;
+package com.example.IrisREC.UI_Control;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,10 +12,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.learnapi.Data.APIInterface.User_Interface;
-import com.example.learnapi.Data.APIService.RetrofitClient;
-import com.example.learnapi.Object.User;
-import com.example.learnapi.R;
+import com.example.IrisREC.Data.APIInterface.User_Interface;
+import com.example.IrisREC.Data.APIService.RetrofitClient;
+import com.example.IrisREC.Object.User;
+import com.example.IrisREC.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;

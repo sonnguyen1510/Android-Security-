@@ -1,4 +1,4 @@
-package com.example.learnapi.Object;
+package com.example.IrisREC.Object;
 
 public class Admin {
     private String _id;

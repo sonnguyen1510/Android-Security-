@@ -1,6 +1,6 @@
-package com.example.learnapi.Data.APIInterface;
+package com.example.IrisREC.Data.APIInterface;
 
-import com.example.learnapi.Object.Admin;
+import com.example.IrisREC.Object.Admin;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
