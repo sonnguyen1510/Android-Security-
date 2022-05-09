@@ -15,12 +15,10 @@ import android.widget.PopupWindow;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.learnapi.API.APIInterface.Admin_Interface;
-import com.example.learnapi.API.APIService.RetrofitClient;
+import com.example.learnapi.Data.APIInterface.Admin_Interface;
+import com.example.learnapi.Data.APIService.RetrofitClient;
 import com.example.learnapi.Object.Admin;
 import com.example.learnapi.R;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +44,14 @@ public class Login_Controll extends AppCompatActivity {
         LogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Log In Check
+                String IsLogInMoreThanOne = getIntent().getStringExtra("LogOut");
+                if(!(IsLogInMoreThanOne == null)){
+                    UserName.setText("");
+                    Password.setText("");
+                }
+
+
                 Admin_Interface admin_interface = RetrofitClient.getRetrofit().create(Admin_Interface.class);
                 Call<Admin> callAdminAPI = admin_interface.AdminCheck(UserName.getText().toString(),Password.getText().toString());
                 callAdminAPI.enqueue(new Callback<Admin>() {
@@ -54,6 +60,7 @@ public class Login_Controll extends AppCompatActivity {
                         Admin admin_check = response.body();
 
                         if(admin_check == null){
+                            //----------------------------------------POPUP SETTING----------------------------------------
                             //Show popup window when login fail
                             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                             View LoginFailPopUp = inflater.inflate(R.layout.login_popup_window,null);
@@ -76,7 +83,7 @@ public class Login_Controll extends AppCompatActivity {
                         }
                         else{
                             Intent goToAdminForm = new Intent(view.getContext(),Main_form_control.class);
-                            goToAdminForm.putExtra("AdminID",admin_check.get_id());
+                            goToAdminForm.putExtra("From_LogInForm",admin_check.get_id());
                             view.getContext().startActivity(goToAdminForm);
                         }
                     }

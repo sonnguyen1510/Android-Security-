@@ -14,13 +14,16 @@
         android:theme="@style/Theme.LearnAPI"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".UI_Control.Add_user_Control"
+            android:exported="true" />
+        <activity
             android:name=".UI_Control.Main_form_control"
             android:exported="true"
             android:label="@string/title_activity_main_form_control"
             android:theme="@style/Theme.LearnAPI.NoActionBar" />
         <activity
             android:name=".UI_Control.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".UI_Control.Login_Controll"
             android:exported="true">

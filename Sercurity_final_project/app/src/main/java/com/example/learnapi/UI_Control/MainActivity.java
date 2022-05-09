@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.learnapi.API.APIInterface.User_Interface;
-import com.example.learnapi.API.APIService.RetrofitClient;
+import com.example.learnapi.Data.APIInterface.User_Interface;
+import com.example.learnapi.Data.APIService.RetrofitClient;
 import com.example.learnapi.Object.User;
 import com.example.learnapi.R;
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         User Result = response.body();
-                        Name.setText(Result.getUser_Name()+"");
+                        Name.setText(Result.getName()+"");
                         ID.setText(Result.get_id()+"");
 
                         imageView.setImageBitmap(ConvertStringBase64ToBitMap(Result.getImageEye()));

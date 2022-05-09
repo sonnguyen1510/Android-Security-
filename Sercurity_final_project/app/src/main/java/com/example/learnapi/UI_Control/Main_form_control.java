@@ -1,26 +1,23 @@
 package com.example.learnapi.UI_Control;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.learnapi.API.APIInterface.Admin_Interface;
-import com.example.learnapi.API.APIService.RetrofitClient;
+import com.example.learnapi.Data.APIInterface.Admin_Interface;
+import com.example.learnapi.Data.APIService.RetrofitClient;
 import com.example.learnapi.Object.Admin;
 import com.example.learnapi.R;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.learnapi.databinding.MainFormBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,13 +29,81 @@ public class Main_form_control extends AppCompatActivity {
     private Admin admin;
     public TextView AdminName;
     public DrawerLayout drawerLayout;
+    public Activity context = this;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String AdminID = getIntent().getStringExtra("AdminID");
+        setContentView(R.layout.main_form);
+        String AdminID = getIntent().getStringExtra("From_LogInForm");
+        Log.e("Admin id" , AdminID);
+        AdminName = findViewById(R.id.Admin_name);
+
         //AdminName = findViewById(R.id.Admin_name);
         drawerLayout = findViewById(R.id.drawer_layout);
+        //---------------------------NAVIGATION DRAWER----------------------------
+        ImageView main_form_Menu;
+
+
+        //menu
+        findViewById(R.id.main_form_Menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDrawer(drawerLayout);
+            }
+        });
+        //back to home
+        findViewById(R.id.main_form_BackToHome).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recreate();
+            }
+        });
+
+        //add User
+        Class AddUser_Activity = Add_user_Control.class;
+
+        findViewById(R.id.main_form_AddUser).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent AddUser = new Intent(view.getContext(),AddUser_Activity);
+                AddUser.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                AddUser.putExtra("From_MainForm",admin.get_id());
+                view.getContext().startActivity(AddUser);
+            }
+        });
+
+        //logOut
+        Class LoginForm = Login_Controll.class;
+        String Message = "LogOut";
+
+        findViewById(R.id.main_form_BackToLogInForm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder Confirm = new AlertDialog.Builder(view.getContext());
+                Confirm.setTitle("Log Out")
+                        .setMessage("Are you sure ?")
+                        .setPositiveButton("Log Out", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent BackToLogin = new Intent(view.getContext(),LoginForm);
+                                BackToLogin.putExtra("LogOut",Message);
+                                context.finish();
+
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        })
+                        .create();
+
+            }
+        });
+
 
 
         //GetAdminInformation
@@ -48,7 +113,12 @@ public class Main_form_control extends AppCompatActivity {
             @Override
             public void onResponse(Call<Admin> call, Response<Admin> response) {
                 admin = response.body();
-                AdminName.setText(admin.getName()+"");
+                if(admin == null){
+                    Log.e("Call APi","Get Admin information fail");
+                }
+                else{
+                    AdminName.setText(admin.getName()+"");
+                }
             }
 
             @Override
@@ -57,9 +127,22 @@ public class Main_form_control extends AppCompatActivity {
             }
         });
 
-
-
     }
 
 
+    private static void openDrawer(DrawerLayout drawerLayout) {
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    private static void CloseDrawer(DrawerLayout drawerLayout){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        CloseDrawer(drawerLayout);
+    }
 }

@@ -1,25 +1,47 @@
 package com.example.learnapi.Object;
 
 public class User {
+
+
     private String _id;
-    private String User_name;
+    private String Name;
     private String Age;
     private String Birthday;
+    private String Email;
     private boolean Gender;
     private String ImageEye;
+    private int __v;
 
-    public User(String _id, String user_name, String age, String birthday, boolean gender, String imageEye) {
+    public User(String _id, String name, String age, String birthday, String email, boolean gender, String imageEye, int __v) {
         this._id = _id;
-        User_name = user_name;
+        Name = name;
         Age = age;
         Birthday = birthday;
+        Email = email;
         Gender = gender;
         ImageEye = imageEye;
+        this.__v = __v;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
     }
 
     public String getImageEye() {
 
         return ImageEye;
+    }
+
+    public int get__v() {
+        return __v;
+    }
+
+    public void set__v(int __v) {
+        this.__v = __v;
     }
 
     public void setImageEye(String imageEye) {
@@ -34,12 +56,12 @@ public class User {
         this._id = _id;
     }
 
-    public String getUser_Name() {
-        return User_name;
+    public String getName() {
+        return Name;
     }
 
-    public void setUser_Name(String user_Name) {
-        User_name = user_Name;
+    public void setName(String Name) {
+        Name = Name;
     }
 
     public String getAge() {

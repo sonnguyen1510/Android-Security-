@@ -2,22 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    >
+    android:layout_gravity="start"
+
+    android:gravity="start">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
+        android:background="@drawable/side_nav_bar"
         >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:id="@+id/Admin_avatar"
-            android:layout_height="65dp"
-            android:layout_margin="16dp"
-            android:src="@mipmap/ic_launcher"
-            ></ImageView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="12dp"
+            app:cardCornerRadius="250dp"
+            app:cardBackgroundColor="@color/white">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:cardCornerRadius="250dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_default_user"
+                    android:scaleType="centerCrop"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.cardview.widget.CardView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_marginStart="16dp"
@@ -30,12 +48,6 @@
             android:textAlignment="center"
             android:textSize="30dp"></TextView>
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
-
 
     </LinearLayout>
 
@@ -45,6 +57,7 @@
         android:orientation="vertical"
         >
         <TextView
+            android:id="@+id/main_form_BackToHome"
             android:drawableStart="@drawable/ic_baseline_home_24"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,21 +65,22 @@
             android:layout_weight="1"
             android:padding="12dp"
             android:textSize="15dp"
-            android:text="Home"
-            android:layout_marginStart="16dp">
+            android:text="      Home"
+            >
 
         </TextView>
 
         <TextView
             android:drawableStart="@drawable/ic_baseline_add_24"
+            android:id="@+id/main_form_AddUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:padding="12dp"
-            android:text="Add User"
-            android:layout_marginStart="16dp">
+            android:text="      Add User"
+            >
 
         </TextView>
 
@@ -79,25 +93,63 @@
             android:layout_weight="1"
             android:layout_marginBottom="10dp"
             android:padding="12dp"
-            android:text="Upload"
-            android:layout_marginStart="16dp">
+            android:text="      Upload"
+            >
 
         </TextView>
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="?android:attr/listDivider" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Other"
+            android:textSize="17dp"
+            android:padding="12dp"></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="About Us"
+            android:textSize="18dp"
+            android:padding="12dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="10dp"
+            android:background="?android:attr/listDivider" />
 
     </LinearLayout>
 
-
     <Button
+        android:id="@+id/main_form_BackToLogInForm"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/login_popup_window_design"
-        android:backgroundTint="@null"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/login_popup_window_button_design"
+        app:backgroundTint="@null"
+
         android:gravity="center"
         android:text="Log Out"
-        android:textAllCaps="false"></Button>
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="17dp"></Button>
 
 
 </LinearLayout>

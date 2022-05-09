@@ -12,8 +12,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <include layout="@layout/main_form_toolbar">
-        </include>
+        <include
+            layout="@layout/main_form_toolbar"/>
+
 
         <TextView
             android:layout_width="match_parent"
@@ -27,7 +28,7 @@
 
     </LinearLayout>
     <RelativeLayout
-        android:layout_width="300dp"
+        android:layout_width="310dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/white"
@@ -37,12 +38,4 @@
 
     </RelativeLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/main_form_navigation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        >
-
-    </com.google.android.material.navigation.NavigationView>
-</androidx.drawerlayout.widget.DrawerLayout>
+   </androidx.drawerlayout.widget.DrawerLayout>

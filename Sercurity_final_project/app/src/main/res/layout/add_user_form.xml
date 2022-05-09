@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="false"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            >
+            <include
+                layout="@layout/main_form_toolbar"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="12dp"
+                    app:cardCornerRadius="250dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:cardCornerRadius="250dp"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/ic_default_user"
+                            android:scaleType="centerCrop"/>
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.cardview.widget.CardView>
+                <TextView
+
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  Set Avatar"
+                    android:textStyle="italic"
+                    android:drawableStart="@drawable/ic_baseline_add_circle_24">
+
+                </TextView>
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+
+                    android:background="?android:attr/listDivider" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Information"
+                    android:textSize="15dp"
+                    android:layout_marginStart="10dp"
+
+                    ></TextView>
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_margin="10dp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:startIconDrawable="@drawable/ic_baseline_email_24">
+
+                    <EditText
+                        android:id="@+id/Name_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+
+                        android:background="@drawable/add_user_edittext_design"
+                        android:hint="Name"
+                        android:inputType="textPersonName"
+                        android:textSize="15dp"
+                        app:boxStrokeWidth="1dp">
+
+                    </EditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_margin="10dp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:startIconDrawable="@drawable/ic_baseline_email_24">
+
+                    <EditText
+                        android:id="@+id/Email_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+
+                        app:boxStrokeWidth="1dp"
+                        android:background="@drawable/add_user_edittext_design"
+                        android:hint="Email"
+                        android:inputType="textPersonName"
+                        android:textSize="15dp">
+
+                    </EditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_margin="10dp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    app:startIconDrawable="@drawable/ic_baseline_birthday_24">
+
+                    <EditText
+                        android:id="@+id/Age_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+
+                        android:background="@drawable/add_user_edittext_design"
+                        android:hint="Age"
+                        android:inputType="textPersonName"
+                        android:textSize="15dp"
+                        app:boxStrokeWidth="1dp">
+
+                    </EditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_margin="10dp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    app:startIconDrawable="@drawable/ic_baseline_birthday_24">
+
+                    <EditText
+                        android:id="@+id/Birthday_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+
+                        android:background="@drawable/add_user_edittext_design"
+                        android:hint="Birthday"
+                        android:inputType="textPersonName"
+                        android:textSize="15dp"
+                        app:boxStrokeWidth="1dp">
+
+                    </EditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include layout="@layout/gender_radio_button_design"></include>
+                </RelativeLayout>
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="2dp"
+
+                    android:background="?android:attr/listDivider" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Authentication"
+                    android:textSize="15dp"
+                    android:layout_marginStart="10dp"
+                    >
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/add_user_imageEye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_launcher">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/Input_EyeImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_baseline_add_circle_24"
+                        android:text="  Set up eye authentication"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="15dp">
+                    </TextView>
+                </LinearLayout>
+                <View
+                    android:id="@+id/divider5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="2dp"
+
+                    android:background="?android:attr/listDivider" />
+
+                <Button
+                    android:id="@+id/SignInButton"
+                    android:layout_width="150dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/login_popup_window_button_design"
+                    android:gravity="center"
+                    android:text="Create"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@null"></Button>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:layout_width="310dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/white"
+        >
+
+        <include layout="@layout/main_form_nav_drawer"></include>
+
+    </RelativeLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

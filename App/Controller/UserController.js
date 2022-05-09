@@ -7,6 +7,7 @@ const UserController = {
             const newUser = new User(req.body)
             const saveUser = await newUser.save()
             console.log("Create user Successful")
+            res.json(saveUser)
         }
         catch(error){
             console.log("Create user fail")

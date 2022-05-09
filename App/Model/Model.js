@@ -1,9 +1,10 @@
 const mongoose = require( 'mongoose')
 const UserSchema  = new mongoose.Schema({
-    User_name :{
+    Name :{
         type : String,
         required : true
     },
+
     Age:{
         type : String
     },
@@ -13,6 +14,10 @@ const UserSchema  = new mongoose.Schema({
 
     Gender : {
         type : Boolean
+    },
+
+    Email :{
+        type : String
     },
 
     ImageEye : {
@@ -26,6 +31,7 @@ const AdminSchema = new mongoose.Schema({
         type : String,
         required : true
     },
+
     User_name:{
         type : String,
         required : true
