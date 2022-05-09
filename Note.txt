@@ -7,3 +7,4 @@ Install Nodemon(auto run ) :npm install -g nodemon
 MongoDB :https://www.mongodb.com/
 Install mongoose : $ npm install mongoose
 
+*Postman(check API)
