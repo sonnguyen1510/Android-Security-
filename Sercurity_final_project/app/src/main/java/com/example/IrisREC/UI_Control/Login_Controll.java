@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.IrisREC.Data.APIInterface.Admin_Interface;
+import com.example.IrisREC.Data.APIService.AdminCall;
 import com.example.IrisREC.Data.APIService.RetrofitClient;
 import com.example.IrisREC.Object.Admin;
 import com.example.IrisREC.R;
@@ -52,9 +53,10 @@ public class Login_Controll extends AppCompatActivity {
                 }
 
 
-                Admin_Interface admin_interface = RetrofitClient.getRetrofit().create(Admin_Interface.class);
-                Call<Admin> callAdminAPI = admin_interface.AdminCheck(UserName.getText().toString(),Password.getText().toString());
-                callAdminAPI.enqueue(new Callback<Admin>() {
+                AdminCall.AdminCheck(
+                        UserName.getText().toString(),
+                        Password.getText().toString()
+                ).enqueue(new Callback<Admin>() {
                     @Override
                     public void onResponse( Call<Admin> call, Response<Admin> response) {
                         Admin admin_check = response.body();

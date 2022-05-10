@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.IrisREC.Data.APIInterface.User_Interface;
 import com.example.IrisREC.Data.APIService.RetrofitClient;
+import com.example.IrisREC.Data.APIService.UserCall;
 import com.example.IrisREC.Function.FunctionImplement;
 import com.example.IrisREC.Object.User;
 import com.example.IrisREC.R;
@@ -180,9 +181,8 @@ public class Add_user_Control extends AppCompatActivity {
             public void onClick(View view) {
                 AlertDialog.Builder Result = new AlertDialog.Builder(view.getContext());
                 if(IsFullInformation()){
-                    User_Interface user_interface = RetrofitClient.getRetrofit().create(User_Interface.class);
-                    Call<User> CallUserAPI = user_interface.AddNewUser(new User(
-                       null,
+                    UserCall.AddUser(new User(
+                            null,
                             Name.getText().toString(),
                             Age.getText().toString(),
                             Birthday.getText().toString(),
@@ -190,8 +190,7 @@ public class Add_user_Control extends AppCompatActivity {
                             Gender(),
                             FunctionImplement.ConvertBitmapToStringBase64(ImageEyeData),
                             0
-                    ));
-                    CallUserAPI.enqueue(new Callback<User>() {
+                    )).enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
                             User IsUserCreated = response.body();

@@ -10,14 +10,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.IrisREC.Data.APIInterface.Admin_Interface;
+import com.example.IrisREC.Data.APIInterface.User_Interface;
+import com.example.IrisREC.Data.APIService.AdminCall;
 import com.example.IrisREC.Data.APIService.RetrofitClient;
+import com.example.IrisREC.Data.APIService.UserCall;
 import com.example.IrisREC.Object.Admin;
+import com.example.IrisREC.Object.User;
 import com.example.IrisREC.R;
+import com.example.IrisREC.View.UserList.View.UserList_RecycleView_Adapter;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,6 +39,11 @@ public class Main_form_control extends AppCompatActivity {
     public TextView AdminName;
     public DrawerLayout drawerLayout;
     public Activity context = this;
+    //User list
+    public RecyclerView User_list;
+    public List<User> UserData;
+    public UserList_RecycleView_Adapter adapter;
+
 
 
     @Override
@@ -107,9 +121,7 @@ public class Main_form_control extends AppCompatActivity {
 
 
         //GetAdminInformation
-        Admin_Interface admin_interface = RetrofitClient.getRetrofit().create(Admin_Interface.class);
-        Call<Admin> CallAdminAPI = admin_interface.GetAdminByID(AdminID);
-        CallAdminAPI.enqueue(new Callback<Admin>() {
+        AdminCall.getAdminByID(AdminID).enqueue(new Callback<Admin>() {
             @Override
             public void onResponse(Call<Admin> call, Response<Admin> response) {
                 admin = response.body();
@@ -126,6 +138,29 @@ public class Main_form_control extends AppCompatActivity {
                 Log.e("Call Api" , "Get admin information fail");
             }
         });
+
+        //---------------------------------------SHOW LIST USER---------------------------
+        User_list = findViewById(R.id.User_List);
+        //Get User List
+        UserCall.GetAllUserData().enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                UserData = response.body();
+                adapter = new UserList_RecycleView_Adapter(UserData,context);
+                User_list.setAdapter(adapter);
+                User_list.setLayoutManager(new LinearLayoutManager(context));
+
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Log.e("APICall","Get List User Fail");
+            }
+        });
+        //Upload User data to recycle view
+        /*
+        *
+        * */
 
     }
 

@@ -18,6 +18,7 @@ const UserController = {
         try{
             const user = await User.find()
             res.json(user)
+            console.log("Get all users success")
         }
         catch(error){
             console.log("Can't get user")

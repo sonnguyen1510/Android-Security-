@@ -5,7 +5,7 @@
         android:left="10dp"
         android:top="10dp"
         android:right="10dp"
-        android:bottom="10dp" >
+        >
     </padding>
     <!--
     <solid
@@ -17,4 +17,8 @@
     <corners
         android:radius="15dp" >
     </corners>
+    <stroke
+        android:width="2dp">
+
+    </stroke>
 </shape>

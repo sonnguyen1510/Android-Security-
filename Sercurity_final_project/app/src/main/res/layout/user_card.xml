@@ -11,42 +11,41 @@
         android:orientation="horizontal"
         >
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:cardCornerRadius="250dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_margin="15dp"
-            android:layout_gravity="center">
-
-            <ImageView
-                android:id="@+id/UserCard_EyeImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_default_user"
-                android:scaleType="centerCrop"/>
-
-        </androidx.cardview.widget.CardView>
+            android:id="@+id/UserCard_EyeImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_launcher_background"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            >
             <TextView
                 android:id="@+id/UserCard_Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
-                android:textSize="30dp"
+                android:textSize="22dp"
                 android:textStyle="bold"
-                android:layout_margin="10dp"></TextView>
+                android:layout_marginTop="13dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="13dp"
+                ></TextView>
 
             <TextView
                 android:id="@+id/UserCard_Email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email"
-                android:textSize="20dp"
+                android:textSize="12dp"
                 android:layout_marginBottom="13dp"
-                android:layout_marginLeft="13dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="13dp"
 
                 >
@@ -59,7 +58,7 @@
     <View
         android:id="@+id/divider6"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="1dp"
         android:background="?android:attr/listDivider" />
 
 </LinearLayout>

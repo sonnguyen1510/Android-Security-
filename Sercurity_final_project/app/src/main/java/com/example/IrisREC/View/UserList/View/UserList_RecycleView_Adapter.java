@@ -20,12 +20,11 @@ public class UserList_RecycleView_Adapter extends RecyclerView.Adapter<UserList_
 
     public List<User> UserData ;
     public Context context;
-    public int RecycleViewLayout;
 
-    public UserList_RecycleView_Adapter(List<User> userData, Context context, int recycleViewLayout) {
+    public UserList_RecycleView_Adapter(List<User> userData, Context context) {
         UserData = userData;
         this.context = context;
-        RecycleViewLayout = recycleViewLayout;
+
     }
 
     @NonNull
@@ -33,7 +32,7 @@ public class UserList_RecycleView_Adapter extends RecyclerView.Adapter<UserList_
     public UserCard onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View UserView = LayoutInflater
                 .from(context)
-                .inflate(RecycleViewLayout,parent,false);
+                .inflate(R.layout.user_card,parent,false);
         return new UserCard(UserView);
     }
 
@@ -42,8 +41,9 @@ public class UserList_RecycleView_Adapter extends RecyclerView.Adapter<UserList_
         User User = UserData.get(position);
         holder.Name.setText(User.getName()+"");
         holder.Email.setText(User.getEmail()+"");
-        holder.ImageEye.setImageBitmap(FunctionImplement.ConvertStringBase64ToBitMap(User.getImageEye()));
 
+        FunctionImplement.ConvertAndSetImageView Decode = new FunctionImplement.ConvertAndSetImageView(holder.ImageEye,context);
+        Decode.execute(User.getImageEye());
     }
 
     @Override
