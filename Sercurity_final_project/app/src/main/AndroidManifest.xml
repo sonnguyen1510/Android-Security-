@@ -26,9 +26,6 @@
             android:label="@string/title_activity_main_form_control"
             android:theme="@style/Theme.LearnAPI.NoActionBar" />
         <activity
-            android:name=".UI_Control.MainActivity"
-            android:exported="true" />
-        <activity
             android:name=".UI_Control.Login_Controll"
             android:exported="true">
             <intent-filter>

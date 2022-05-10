@@ -14,7 +14,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,10 +26,10 @@ import android.widget.Toast;
 
 import com.example.IrisREC.Data.APIInterface.User_Interface;
 import com.example.IrisREC.Data.APIService.RetrofitClient;
+import com.example.IrisREC.Function.FunctionImplement;
 import com.example.IrisREC.Object.User;
 import com.example.IrisREC.R;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -189,7 +188,7 @@ public class Add_user_Control extends AppCompatActivity {
                             Birthday.getText().toString(),
                             Email.getText().toString(),
                             Gender(),
-                            ImageEyeStringBase64(ImageEyeData),
+                            FunctionImplement.ConvertBitmapToStringBase64(ImageEyeData),
                             0
                     ));
                     CallUserAPI.enqueue(new Callback<User>() {
@@ -289,13 +288,7 @@ public class Add_user_Control extends AppCompatActivity {
         Birthday.setText(dateFormat.format(myCalendar.getTime()));
     }
 
-    private String ImageEyeStringBase64(Bitmap data) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        data.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
 
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
 
     private boolean Gender() {
         if(IsFemale.isChecked()){
