@@ -11,4 +11,9 @@ Install mongoose : $ npm install mongoose
 *Postman(check API)
 
 ----------------------ANDROID--------------------------
-Install : NKD and CMAKE in SDK manager
+Install : 
+	-NKD and CMAKE in SDK manager 
+
+Check:
+	-Add CDK(android download resource) to environment computer path
+
