@@ -105,7 +105,7 @@ public class Login_Controll extends AppCompatActivity {
             public void onClick(View view) {
                 Intent DirectToCheck_Iris = new Intent(view.getContext(),IrisCheck);
                 String Message = "Request_Iris_Check";
-                DirectToCheck_Iris.putExtra("From_LoginControl",Message);
+                DirectToCheck_Iris.putExtra("IrisCheck",Message);
                 view.getContext().startActivity(DirectToCheck_Iris);
             }
         });

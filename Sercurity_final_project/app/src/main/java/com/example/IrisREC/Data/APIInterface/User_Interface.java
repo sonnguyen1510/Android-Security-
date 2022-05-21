@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -24,5 +25,9 @@ public interface    User_Interface {
     //AddUser
     @POST("api/v1/User/Add_User")
     Call<User> AddNewUser(@Body User user);
+
+    //Delete User
+    @DELETE("api/v1/User/delete/{Id}")
+    Call<User> DeleteAUser(@Path("Id") String id);
 }
 

@@ -12,6 +12,9 @@ router.get("/get_all_user",UserController.getAllUser)
 //get user by id
 router.get("/get_user/:UserID",UserController.getUserbyID)
 
+//delelet user by Id
+router.delete("/delete/:UserID",UserController.DeleteUserbyID)
+
 /**router.get('/',function (req,res,next){
     console.log("Add get function")
 }) */

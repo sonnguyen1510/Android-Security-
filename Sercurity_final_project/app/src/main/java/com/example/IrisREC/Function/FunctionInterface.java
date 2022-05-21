@@ -12,5 +12,16 @@ public interface FunctionInterface {
         return null;
     }
 
+    static Bitmap bitmapFromRgba(int width, int height, byte[] bytes){
+        return null;
+    }
+
+    static byte[] bitmapToRgba(Bitmap bitmap){
+        return null;
+    }
+
+    static Bitmap ARGBBitmap(Bitmap img){
+        return null;
+    }
 
 }

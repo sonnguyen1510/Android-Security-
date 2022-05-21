@@ -32,6 +32,21 @@ const UserController = {
         } catch (error) {
             console.log("Can't get user")
         }
+    },
+
+    //Delete User by id
+    
+    DeleteUserbyID : async(req,res) =>{
+        try {
+            const UserDeleted = await User.DeleteUserbyID(req.params.UserID)
+            res.json({
+                Success : true ,
+                DataDelete  : UserDeleted
+            })
+        } catch (error) {
+            console.log("Delete user fail")
+            req.status(404).send("Not Found")
+        }
     }
 }
 

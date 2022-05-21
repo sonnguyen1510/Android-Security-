@@ -7,4 +7,8 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "LearnAPI"
+
 include ':app'
+
+
+include ':sdk'

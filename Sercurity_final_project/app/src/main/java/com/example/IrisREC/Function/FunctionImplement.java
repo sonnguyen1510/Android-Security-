@@ -7,9 +7,19 @@ import android.os.AsyncTask;
 import android.util.Base64;
 import android.widget.ImageView;
 
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FunctionImplement implements FunctionInterface{
+
     public static Bitmap ConvertStringBase64ToBitMap(String imageString){
         byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -55,4 +65,51 @@ public class FunctionImplement implements FunctionInterface{
             super.onPostExecute(bitmap);
         }
     }
+
+    public static byte[] bitmapToRgba(Bitmap bitmap) {
+        if (bitmap.getConfig() != Bitmap.Config.ARGB_8888)
+            throw new IllegalArgumentException("Bitmap must be in ARGB_8888 format");
+        int[] pixels = new int[bitmap.getWidth() * bitmap.getHeight()];
+        byte[] bytes = new byte[pixels.length * 4];
+        bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
+        int i = 0;
+        for (int pixel : pixels) {
+            // Get components assuming is ARGB
+            int A = (pixel >> 24) & 0xff;
+            int R = (pixel >> 16) & 0xff;
+            int G = (pixel >> 8) & 0xff;
+            int B = pixel & 0xff;
+            bytes[i++] = (byte) R;
+            bytes[i++] = (byte) G;
+            bytes[i++] = (byte) B;
+            bytes[i++] = (byte) A;
+        }
+        return bytes;
+    }
+
+    public static Bitmap bitmapFromRgba(int width, int height, byte[] bytes) {
+        int[] pixels = new int[bytes.length / 4];
+        int j = 0;
+
+        for (int i = 0; i < pixels.length; i++) {
+            int R = bytes[j++] & 0xff;
+            int G = bytes[j++] & 0xff;
+            int B = bytes[j++] & 0xff;
+            int A = bytes[j++] & 0xff;
+
+            int pixel = (A << 24) | (R << 16) | (G << 8) | B;
+            pixels[i] = pixel;
+        }
+
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+        return bitmap;
+    }
+
+    public static Bitmap ARGBBitmap(Bitmap img) {
+        return img.copy(Bitmap.Config.ARGB_8888,true);
+    }
+
+
 }

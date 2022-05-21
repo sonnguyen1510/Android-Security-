@@ -1,3 +1,4 @@
+----------------------SERVER--------------------------
 *Language
 ExpressJS : https://expressjs.com/en/guide/routing.html
 NodeJS: https://nodejs.org/en/download/ (add PATH needed )
@@ -8,3 +9,6 @@ MongoDB :https://www.mongodb.com/
 Install mongoose : $ npm install mongoose
 
 *Postman(check API)
+
+----------------------ANDROID--------------------------
+Install : NKD and CMAKE in SDK manager

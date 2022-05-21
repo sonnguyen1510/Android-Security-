@@ -18,4 +18,9 @@ public class UserCall {
         User_Interface user_interface = RetrofitClient.getRetrofit().create(User_Interface.class);
         return user_interface.AddNewUser(user);
     }
+
+    public static Call<User> Delete(String ID){
+        User_Interface user_interface = RetrofitClient.getRetrofit().create(User_Interface.class);
+        return user_interface.DeleteAUser(ID);
+    }
 }
