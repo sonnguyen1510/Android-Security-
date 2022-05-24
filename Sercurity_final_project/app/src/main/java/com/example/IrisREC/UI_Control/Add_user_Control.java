@@ -1,5 +1,7 @@
 package com.example.IrisREC.UI_Control;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,20 +30,26 @@ import com.example.IrisREC.Data.APIInterface.User_Interface;
 import com.example.IrisREC.Data.APIService.RetrofitClient;
 import com.example.IrisREC.Data.APIService.UserCall;
 import com.example.IrisREC.Function.FunctionImplement;
+import com.example.IrisREC.Function.IrisFunctionImplement;
 import com.example.IrisREC.Object.User;
 import com.example.IrisREC.R;
+
+import org.opencv.android.CameraBridgeViewBase;
+import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Mat;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Vector;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Add_user_Control extends AppCompatActivity {
+public class Add_user_Control extends AppCompatActivity  {
 
     public DrawerLayout drawerLayout;
     public Activity context = this;
@@ -61,6 +69,23 @@ public class Add_user_Control extends AppCompatActivity {
     //
     public Calendar myCalendar;
     public Bitmap ImageEyeData;
+
+
+    //Loads opencv
+    static
+    {
+        if (OpenCVLoader.initDebug())
+            Log.i(TAG, "OpenCV loaded successfully.");
+        else
+            Log.i(TAG, "OpenCV load failed.");
+    }
+
+    //Loads opencv and nativelib
+    static
+    {
+        System.loadLibrary("native-lib");
+        System.loadLibrary("opencv_java3");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +183,7 @@ public class Add_user_Control extends AppCompatActivity {
             }
         };
 
+
         Birthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,6 +215,7 @@ public class Add_user_Control extends AppCompatActivity {
                             Email.getText().toString(),
                             Gender(),
                             FunctionImplement.ConvertBitmapToStringBase64(ImageEyeData),
+                            ImageEyeToCode(ImageEyeData),
                             0
                     )).enqueue(new Callback<User>() {
                         @Override
@@ -286,6 +313,14 @@ public class Add_user_Control extends AppCompatActivity {
 
         Birthday.setText(dateFormat.format(myCalendar.getTime()));
     }
+
+
+    private Vector<Integer> ImageEyeToCode(Bitmap inputEye){
+        Mat GetNormalizeImage = IrisFunctionImplement.IrisNormalization_ToMat(inputEye);
+
+        return IrisFunctionImplement.Encode(GetNormalizeImage);
+    }
+
 
 
 

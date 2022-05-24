@@ -29,6 +29,7 @@ const UserController = {
         try {
             const user = await User.findById(req.params.UserID)
             res.json(user)
+            console.log("Get User by ID success")
         } catch (error) {
             console.log("Can't get user")
         }

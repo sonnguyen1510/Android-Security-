@@ -14,6 +14,11 @@ public class UserCall {
         return user_interface.getUserData();
     }
 
+    public static Call<User> GetUserByID(String ID){
+        User_Interface user_interface = RetrofitClient.getRetrofit().create(User_Interface.class);
+        return user_interface.getUserByID(ID);
+    }
+
     public static Call<User> AddUser(User user){
         User_Interface user_interface = RetrofitClient.getRetrofit().create(User_Interface.class);
         return user_interface.AddNewUser(user);

@@ -24,4 +24,4 @@ find_library( log-lib log )
 
 #Added by IDE on project create, Removed and replace with additional parameter suggested by Bruno Alexandre Krinski 20160825
 #target_link_libraries( native-lib $\{log-lib} )
-target_link_libraries( native-lib  ${log-lib})
+target_link_libraries( native-lib  ${log-lib} lib_opencv)

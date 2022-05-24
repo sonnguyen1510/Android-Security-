@@ -7,18 +7,13 @@ import android.os.AsyncTask;
 import android.util.Base64;
 import android.widget.ImageView;
 
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
+import com.example.IrisREC.Function.Interface.FunctionInterface;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
-public class FunctionImplement implements FunctionInterface{
+public class FunctionImplement implements FunctionInterface {
 
     public static Bitmap ConvertStringBase64ToBitMap(String imageString){
         byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
@@ -110,6 +105,28 @@ public class FunctionImplement implements FunctionInterface{
     public static Bitmap ARGBBitmap(Bitmap img) {
         return img.copy(Bitmap.Config.ARGB_8888,true);
     }
+
+
+    public static List<Integer> ConvertVectorToList(Vector<Integer> vector){
+        List<Integer> Result = new Vector<>();
+
+        for (int Element : vector){
+            Result.add(Element);
+        }
+
+        return Result;
+    }
+
+    public static Vector<Integer> ConvertListToVector(List<Integer> vector){
+        Vector<Integer> Result = new Vector<>();
+
+        for (int Element : vector){
+            Result.add(Element);
+        }
+
+        return Result;
+    }
+
 
 
 }

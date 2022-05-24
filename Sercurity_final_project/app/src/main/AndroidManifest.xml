@@ -34,7 +34,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Text.Test"
+        <activity android:name=".UI_Control.Show_UserIFormation_Control"
+            android:exported="true">
+
+        </activity>
+        <activity android:name=".TestFunctional.Test"
             android:exported="true">
 
         </activity>

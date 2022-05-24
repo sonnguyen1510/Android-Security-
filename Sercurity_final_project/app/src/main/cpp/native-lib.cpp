@@ -1,27 +1,9 @@
-
-#include "opencv2/objdetect/objdetect.hpp"
-#include "opencv2/highgui/highgui.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
-#include <opencv2/opencv.hpp>
-#include "opencv2/core.hpp"
-#include "opencv2/features2d/features2d.hpp"
-#include <iostream>
-#include <stdio.h>
-#include <cmath>
-#include <list>>
-#include "jni.h"
-
-#define PI 3.14159265358979323846
+#include <jni.h>
+#include <string>
+#include "Source.h"
 
 
-using namespace cv;
 using namespace std;
-
-
-int pupilx, pupily, pupilRadius, irisRadius;
-int histogramValues[58] = {0, 1, 2, 3, 4, 6, 7, 8, 12, 14, 15, 16, 24, 28, 30, 31, 32, 48, 56, 60, 62, 63, 64, 96, 112, 120, 124, 126, 127, 128, 129, 131, 135, 143, 159, 191, 192, 193, 195, 199, 207, 223, 224, 225, 227, 231, 239, 240, 241, 243, 247, 248, 249, 251, 252, 253, 254, 255};
-
-
 
 
 //Mat findAndExtractIris(Mat input, Mat unprocessed, Mat original);
@@ -29,77 +11,103 @@ int histogramValues[58] = {0, 1, 2, 3, 4, 6, 7, 8, 12, 14, 15, 16, 24, 28, 30, 3
 //Mat fillHoles(Mat input);
 //Mat normalize(Mat input);
 //vector<int> CHT(Mat input, int minRadius, int maxRadius);
-
-
-Mat findAndExtractIris(Mat input, Mat unprocessed, Mat original);
-int findIrisRadius(Mat input , Point startPoint, int radius);
-Mat fillHoles(Mat input);
-Mat normalize(Mat input);
-vector<int> CHT(Mat input, int minRadius, int maxRadius);
-
+Mat returnImageTest(Mat img);
+int Round(double x);
 extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_DetectIris(JNIEnv *env,
-                                                                              jclass clazz,
-                                                                              jlong addr_input,
-                                                                              jlong addr_output,
-                                                                              jlong addr_output_normalized,
-                                                                              jlong addr_original) {
+void JNICALL
+Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_DetectIris(JNIEnv *env, jobject instance,jlong addrInput, jlong addrOutput, jlong addrOutputNormalized, jlong addrOriginal)
+{
+    //Mat& currentImage = *(Mat*)addrInput;
+    Mat& output = *(Mat*)addrOutput;
+    Mat& outputNormalized = *(Mat*)addrOutputNormalized;
+    Mat& original = *(Mat*)addrOriginal;
 
-    Mat& currentImage = *(Mat*)addr_input;
-    Mat& output = *(Mat*)addr_output;
-    Mat& outputNormalized = *(Mat*)addr_output_normalized;
-    Mat& original = *(Mat*)addr_original;
+    //Mat unprocessed = currentImage.clone();
 
-    Mat unprocessed = currentImage.clone();
+
+    //cvtColor(original, original, COLOR_BGR2GRAY);
+    //output = returnImageTest(original); //findAndExtractIris(currentImage, unprocessed, original);
+    //output = findAndExtractIris(currentImage, unprocessed, original);
+    output = findAndExtractIris(original);
+    outputNormalized = normalize(output);
+    /*
+     Mat unprocessed = currentImage.clone();
     cvtColor(currentImage, currentImage, COLOR_BGR2GRAY);
     output = findAndExtractIris(currentImage, unprocessed, original);
     outputNormalized = normalize(output);
     unprocessed.release();
+     * */
+
 }
 
-//The function that finds the pupil and iris
 
 
-Mat findAndExtractIris(Mat input, Mat unprocessed, Mat original)
-{
+Mat returnImageTest(Mat img){
     Mat processed;
-    threshold(input, processed, 90, 255, THRESH_BINARY_INV);
-    processed = fillHoles(input);
 
-    cvtColor(unprocessed, unprocessed, CV_BGR2GRAY);
+    cvtColor(img, img, CV_BGR2GRAY);
+
+    threshold(img, processed, 90, 255, THRESH_BINARY_INV);
+    processed = fillHoles(img);
+
+
 
     GaussianBlur(processed, processed, Size(9, 9), 3, 3);
 
+    return processed;
+}
+
+//The function that finds the pupil and iris
+Mat findAndExtractIris( Mat original)
+{
+    Mat processed;
+    //cvtColor(unprocessed, unprocessed, CV_BGR2GRAY);
+    cvtColor(original, processed, CV_BGR2GRAY);
+
+    threshold(processed, processed, 90, 255, THRESH_BINARY_INV);
+    //processed = fillHoles(processed);
+
+
+    GaussianBlur(processed, processed, Size(9, 9), 3, 3);
+
+    Canny(processed,processed,50, 200, 3, false);
     //Find the circles
     //vector<int> circle = CHT(processed, 10, 30);
     vector<Vec3f> circles;
-    HoughCircles(processed, circles, CV_HOUGH_GRADIENT, 2, original.rows / 8, 255, 30, 0, 0);
+    HoughCircles(processed, circles, CV_HOUGH_GRADIENT, 1, original.rows / 16, 100, 30, 0, 0);
     if (circles.size() == 0)
-        unprocessed.release();
+        original.release();
     for (size_t i = 0; i < 1; i++) //Check first circle found
     {
-        Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
-        pupilx = cvRound(circles[i][0]), pupily = cvRound(circles[i][1]);
-
+        Point center(Round(circles[i][0]), Round(circles[i][1]));
+        pupilx = Round(circles[i][0]), pupily = Round(circles[i][1]);
         //Normal
-        if (cvRound(circles[i][2]) < 20)
+        if (Round(circles[i][2]) > 60)
         {
-            pupilRadius = cvRound(circles[i][2]);
-            irisRadius = findIrisRadius(unprocessed, center, pupilRadius);
+            pupilRadius = Round(circles[i][2])/2;
+            irisRadius = Round(circles[i][2]);
+                    //findIrisRadius(original, center, pupilRadius);
         }
         else //Brown eyes
         {
-            irisRadius = cvRound(circles[i][2]);
-            pupilRadius = 15;
+            irisRadius = Round(circles[i][2]*2);
+            pupilRadius = Round(circles[i][2]);
         }
-        circle(unprocessed, center, pupilRadius, Scalar(0), CV_FILLED);
-        circle(unprocessed, center, irisRadius, Scalar(0), 2, 8, 0);
+        circle(original, center, pupilRadius, Scalar(0), CV_FILLED);
+        circle(original, center, irisRadius, Scalar(0), 2, 8, 0);
+
     }
 
-    return unprocessed;
+    return original;
 }
-
+int Round(double x){
+    int y;
+    if(x >= (int)x+0,5)
+        y = (int)x++;
+    else
+        y = (int)x;
+    return y;
+}
 
 vector<int> CHT(Mat input, int minRadius, int maxRadius)
 {
@@ -257,3 +265,40 @@ Mat normalize(Mat input) {
 
 
 */
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_PrintMat(JNIEnv *env,
+                                                                            jclass clazz,
+                                                                            jlong addr_input,jlong addr_output) {
+    Mat& currentImage = *(Mat*)addr_input;
+    Mat& ouput = *(Mat*)addr_output;
+
+    ouput = currentImage;
+
+
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_Gaussian(JNIEnv *env,
+                                                                            jclass clazz,
+                                                                            jlong addr_input,
+                                                                            jlong addr_output) {
+    Mat& inputMat = *(Mat*)addr_input;
+    Mat& outputMat = *(Mat*)addr_output;
+
+    GaussianBlur(inputMat, outputMat, Size(9, 9), 3, 3);
+
+
+
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_Canny(JNIEnv *env, jclass clazz,
+                                                                         jlong addr_input,
+                                                                         jlong addr_output) {
+
+    Mat& inputMat = *(Mat*)addr_input;
+    Mat& outputMat = *(Mat*)addr_output;
+
+    Canny(inputMat,outputMat,50, 200, 3, false);
+}

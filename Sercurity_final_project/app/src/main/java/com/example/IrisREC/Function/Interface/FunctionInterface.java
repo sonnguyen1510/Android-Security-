@@ -1,6 +1,9 @@
-package com.example.IrisREC.Function;
+package com.example.IrisREC.Function.Interface;
 
 import android.graphics.Bitmap;
+
+import java.util.List;
+import java.util.Vector;
 
 public interface FunctionInterface {
     //converter
@@ -23,5 +26,14 @@ public interface FunctionInterface {
     static Bitmap ARGBBitmap(Bitmap img){
         return null;
     }
+
+    public static List<Integer> ConvertVectorToList(Vector<Integer> vector){
+        return null;
+    }
+
+    public static Vector<Integer> ConvertListToVector(List<Integer> vector){
+        return null;
+    }
+
 
 }

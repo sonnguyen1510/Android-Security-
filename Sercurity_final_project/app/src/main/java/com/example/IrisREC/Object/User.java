@@ -1,5 +1,7 @@
 package com.example.IrisREC.Object;
 
+import java.util.List;
+
 public class User {
 
 
@@ -10,9 +12,10 @@ public class User {
     private String Email;
     private boolean Gender;
     private String ImageEye;
+    private List<Integer> ImageEyeCode;
     private int __v;
 
-    public User(String _id, String name, String age, String birthday, String email, boolean gender, String imageEye, int __v) {
+    public User(String _id, String name, String age, String birthday, String email, boolean gender, String imageEye, List<Integer> imageEyeCode, int __v) {
         this._id = _id;
         Name = name;
         Age = age;
@@ -20,7 +23,16 @@ public class User {
         Email = email;
         Gender = gender;
         ImageEye = imageEye;
+        ImageEyeCode = imageEyeCode;
         this.__v = __v;
+    }
+
+    public List<Integer> getImageEyeCode() {
+        return ImageEyeCode;
+    }
+
+    public void setImageEyeCode(List<Integer> imageEyeCode) {
+        ImageEyeCode = imageEyeCode;
     }
 
     public String getEmail() {

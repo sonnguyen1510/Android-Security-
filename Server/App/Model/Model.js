@@ -1,4 +1,5 @@
 const mongoose = require( 'mongoose')
+
 const UserSchema  = new mongoose.Schema({
     Name :{
         type : String,
@@ -22,6 +23,10 @@ const UserSchema  = new mongoose.Schema({
 
     ImageEye : {
         type : String
+    },
+
+    ImageEyeCode:{
+        type :[Number]
     }
 
 })

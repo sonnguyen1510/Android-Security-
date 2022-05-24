@@ -95,14 +95,15 @@ public class Main_form_control extends AppCompatActivity {
         findViewById(R.id.main_form_BackToLogInForm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder Confirm = new AlertDialog.Builder(view.getContext());
-                Confirm.setTitle("Log Out")
+                new AlertDialog.Builder(view.getContext())
+                        .setTitle("Log Out")
                         .setMessage("Are you sure ?")
                         .setPositiveButton("Log Out", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Intent BackToLogin = new Intent(view.getContext(),LoginForm);
                                 BackToLogin.putExtra("LogOut",Message);
+                                view.getContext().startActivity(BackToLogin);
                                 context.finish();
 
                             }
@@ -113,7 +114,7 @@ public class Main_form_control extends AppCompatActivity {
                                 dialogInterface.cancel();
                             }
                         })
-                        .create();
+                        .create().show();
 
             }
         });
