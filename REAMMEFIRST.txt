@@ -11,6 +11,7 @@ Install mongoose : $ npm install mongoose
 *Postman(check API)
 
 ----------------------ANDROID--------------------------
+Download OpenCV :
 Install : 
 	-NKD and CMAKE in SDK manager 
 
