@@ -18,6 +18,9 @@ router.delete("/delete/:ID",UserController.DeleteUserbyID)
 //delete all user
 router.delete("/delete_all",UserController.DeleteAllUser)
 
+//
+router.put("/update/:UserID",UserController.UpdateUserById)
+
 /**router.get('/',function (req,res,next){
     console.log("Add get function")
 }) */

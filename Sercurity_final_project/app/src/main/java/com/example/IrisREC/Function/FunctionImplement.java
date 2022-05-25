@@ -1,19 +1,43 @@
 package com.example.IrisREC.Function;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.IrisREC.Function.Interface.FunctionInterface;
+
+import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Vector;
 
 public class FunctionImplement implements FunctionInterface {
+
+    //Loads opencv
+    static
+    {
+        if (OpenCVLoader.initDebug())
+            Log.i(TAG, "OpenCV loaded successfully.");
+        else
+            Log.i(TAG, "OpenCV load failed.");
+    }
+
+    //Loads opencv and nativelib
+    static
+    {
+        System.loadLibrary("native-lib");
+        System.loadLibrary("opencv_java3");
+    }
 
     public static Bitmap ConvertStringBase64ToBitMap(String imageString){
         byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
@@ -125,6 +149,20 @@ public class FunctionImplement implements FunctionInterface {
         }
 
         return Result;
+    }
+
+    public static Bitmap ConvertMatToBitmap(Mat input ){
+        Bitmap result = Bitmap.createBitmap(input.cols(),input.rows(),Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(input,result);
+        return result;
+    }
+
+    public static Mat ConvertBitmapToMat(Bitmap input ){
+        input = FunctionImplement.ARGBBitmap(input);
+        Mat result = new Mat(input.getWidth(), input.getHeight(), CvType.CV_8UC1);
+        Utils.bitmapToMat(input,result);
+
+        return result;
     }
 
 

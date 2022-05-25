@@ -120,7 +120,7 @@ public class UserInformation_Control extends AppCompatActivity {
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Log.e("User_ID" , UserID);
+                                //Log.e("User_ID" , UserID);
                                 UserCall.Delete(UserID).enqueue(new Callback<User>() {
                                     @Override
                                     public void onResponse(Call<User> call, Response<User> response) {

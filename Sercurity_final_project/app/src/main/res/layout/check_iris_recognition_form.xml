@@ -39,7 +39,6 @@
                 android:layout_marginTop="150dp"
                 android:src="@drawable/ic_default_user"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.554"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -62,6 +61,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/IrisCrop">
 
             </Button>
+
+
+            <TextView
+                android:id="@+id/Back_To_Login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:text="Back to login"
+                android:textColor="#2196F3"
+
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iris_check_loadimage" />
 
             <ImageView
                 android:id="@+id/IrisCrop"

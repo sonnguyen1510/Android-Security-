@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,6 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.IrisREC.Function.FunctionImplement;
+import com.example.IrisREC.Function.IrisFunctionImplement;
+import com.example.IrisREC.Function.NativeFunctionCall_IrisFunction;
 import com.example.IrisREC.R;
 
 import org.opencv.android.OpenCVLoader;
@@ -28,6 +31,7 @@ import org.opencv.core.Mat;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Vector;
 
 
 public class Test extends AppCompatActivity {
@@ -41,7 +45,7 @@ public class Test extends AppCompatActivity {
 
     private Mat InputData;
     private Mat OutputData;
-    private ImageView LoadImg;
+    private Button LoadImg;
     private ImageView IrisCrop;
     private static final String TAG = "MainActivity";
 
@@ -67,7 +71,7 @@ public class Test extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.check_iris_recognition_form);
+        setContentView(R.layout.test_layout);
 
         OpenCVLoader.initDebug();
         JNIReturn = new Mat();
@@ -76,10 +80,10 @@ public class Test extends AppCompatActivity {
         OutputData = new Mat();
 
 
-        LoadImg = findViewById(R.id.LoadImg);
-        IrisCrop = findViewById(R.id.IrisCrop);
+        LoadImg = findViewById(R.id.TestIris);
+        IrisCrop = findViewById(R.id.OP_image);
 
-        findViewById(R.id.iris_check_loadimage).setOnClickListener(new View.OnClickListener() {
+        LoadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -113,8 +117,14 @@ public class Test extends AppCompatActivity {
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
 
                 Bitmap Eye_data =FunctionImplement.ARGBBitmap(BitmapFactory.decodeStream(imageStream));
-                Mat frameIn = new Mat(EyeInput.getWidth(), EyeInput.getHeight(), CvType.CV_8UC1);
-                Utils.bitmapToMat(Eye_data,frameIn);
+                Mat input = FunctionImplement.ConvertBitmapToMat(Eye_data);
+                Mat output = new Mat();
+                NativeFunctionCall_IrisFunction.Segmentation(input.getNativeObjAddr(),output.getNativeObjAddr());
+
+                Log.e("Encode",EncodeIM(IrisFunctionImplement.Encode(IrisFunctionImplement.IrisNormalization_ToMat(Eye_data))));
+
+                IrisCrop.setImageBitmap(FunctionImplement.ConvertMatToBitmap(output));
+
 
                 /*
                 *
@@ -153,5 +163,15 @@ public class Test extends AppCompatActivity {
 
         }
 
+    }
+
+    private String EncodeIM(Vector<Integer> encode) {
+        String Result="[";
+        for(int Element : encode){
+            Result += String.valueOf(Element)+",";
+        }
+        Result+= "]";
+
+        return Result;
     }
 }

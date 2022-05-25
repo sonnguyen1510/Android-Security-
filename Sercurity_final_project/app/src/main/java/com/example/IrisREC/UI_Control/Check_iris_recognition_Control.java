@@ -1,5 +1,6 @@
 package com.example.IrisREC.UI_Control;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +12,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.IrisREC.Data.APIService.UserCall;
@@ -61,6 +64,7 @@ public class Check_iris_recognition_Control extends AppCompatActivity {
     public Button LoadImage;
     public ImageView IrisLocalization;
     public ImageView IrisNomalization;
+    public TextView Back_To_Login;
     public String UserID;
 
     BaseLoaderCallback mLoader = new BaseLoaderCallback(this)
@@ -112,6 +116,10 @@ public class Check_iris_recognition_Control extends AppCompatActivity {
         LoadImage = findViewById(R.id.iris_check_loadimage);
         IrisNomalization = findViewById(R.id.IrisCrop);
         IrisLocalization = findViewById(R.id.LoadImg);
+        Back_To_Login = findViewById(R.id.Back_To_Login);
+
+        //Custom layout
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
 
         UserCall.GetAllUserData().enqueue(new Callback<List<User>>() {
             @Override
@@ -138,7 +146,14 @@ public class Check_iris_recognition_Control extends AppCompatActivity {
             Log.i(TAG, "OpenCV load failed.");
             OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_2_0, this, mLoader);
         }
-
+        Back_To_Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent BackToLogin = new Intent(view.getContext(),Login_Controll.class);
+                BackToLogin.putExtra("LogOut","123");
+                view.getContext().startActivity(BackToLogin);
+            }
+        });
 
 
         LoadImage.setOnClickListener(new View.OnClickListener() {
@@ -225,6 +240,19 @@ public class Check_iris_recognition_Control extends AppCompatActivity {
             Toast.makeText(this, "You haven't picked Image",Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id==android.R.id.home) {
+            Intent BackToLogin = new Intent(this,Login_Controll.class);
+            BackToLogin.putExtra("LogOut","123");
+            startActivity(BackToLogin);
+            finish();
+        }
+        return true;
     }
 
 }

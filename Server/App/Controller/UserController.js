@@ -61,6 +61,19 @@ const UserController = {
             console.log("Delete user fail")
             
         }
+    },
+
+    UpdateUserById : async(req,res)=>{
+        try {
+            await User.findByIdAndUpdate(req.params.UserID,req.body,{
+                Success : true
+            })
+            res.json({
+                Success:true
+            })
+        } catch (error) {
+            console.log("Update user fail")
+        }
     }
 
 }

@@ -25,6 +25,8 @@ public class NativeFunctionCall_IrisFunction {
         System.loadLibrary("native-lib");
         System.loadLibrary("opencv_java3");
     }
+    public native static void Segmentation(long addrInput, long addrOutput);
+
     public native static void Gaussian(long addrInput, long addrOutput);
 
     public native static void Canny(long addrInput,long addrOutput);

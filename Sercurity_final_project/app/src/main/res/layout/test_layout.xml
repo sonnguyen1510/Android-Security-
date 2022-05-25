@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.486" />
 
     <Button
-        android:id="@+id/CallAPI"
+        android:id="@+id/TestIris"
         android:layout_width="107dp"
         android:layout_height="48dp"
         android:layout_marginStart="156dp"
@@ -43,10 +43,10 @@
 
     <ImageView
         android:id="@+id/OP_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="220dp"
+        android:layout_width="203dp"
+        android:layout_height="201dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="116dp"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

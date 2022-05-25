@@ -2,9 +2,11 @@ package com.example.IrisREC.UI_Control;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -93,7 +96,7 @@ public class Show_UserInformation_Control extends AppCompatActivity {
         //Log.e("UserIDIris",UserID);
 
         //Custom layout
-
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
         EditButtons.setVisibility(View.GONE);
         Iris_Information.setVisibility(View.VISIBLE);
         //------------------------------------SHOW INFORMATION---------------------------------------
@@ -124,10 +127,10 @@ public class Show_UserInformation_Control extends AppCompatActivity {
                 //Image
                 //Localization
                 Iris_Canny.setImageBitmap(IrisFunctionImplement.IrisCanny(ShowImageEye));
-                Iris_Canny.setImageBitmap(IrisFunctionImplement.IrisGaussian(ShowImageEye));
+                Iris_Gaussian.setImageBitmap(IrisFunctionImplement.IrisGaussian(ShowImageEye));
                 Iris_Detect.setImageBitmap(IrisFunctionImplement.findIris(ShowImageEye));
                 //Segmentation
-                Iris_Segmentation.setImageBitmap(IrisFunctionImplement.IrisLocalization(ShowImageEye));
+                Iris_Segmentation.setImageBitmap(IrisFunctionImplement.IrisSegmentation(ShowImageEye));
                 //Normalization
                 Iris_Normalization.setImageBitmap(IrisFunctionImplement.IrisNormalization(ShowImageEye));
 
@@ -140,21 +143,18 @@ public class Show_UserInformation_Control extends AppCompatActivity {
             }
         });
 
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
 
-
-
-
-        //Log.e("TAG",UserDataI.getName());
-
-
-
-
-        /*
-
-        * */
-
-
-
+        if (id==android.R.id.home) {
+            Intent BackToLogin = new Intent(this,Login_Controll.class);
+            BackToLogin.putExtra("LogOut","123");
+            startActivity(BackToLogin);
+            finish();
+        }
+        return true;
     }
 }

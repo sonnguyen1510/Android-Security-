@@ -10,6 +10,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -173,21 +175,15 @@ public class Add_user_Control extends AppCompatActivity  {
          //setup
 
         //Show calendar
-        DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH,month);
-                myCalendar.set(Calendar.DAY_OF_MONTH,day);
-                updateLabel();
-            }
-        };
 
 
-        Birthday.setOnClickListener(new View.OnClickListener() {
+        Birthday.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
             @Override
-            public void onClick(View view) {
-                new DatePickerDialog(view.getContext(),date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    showDialog(1100);
+                }
             }
         });
         //CHOSE IMAGE FROM gallery
@@ -307,12 +303,6 @@ public class Add_user_Control extends AppCompatActivity  {
         IsUploadedImage = false;
     }
 
-    private void updateLabel(){
-        String myFormat="MM/dd/yy";
-        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
-
-        Birthday.setText(dateFormat.format(myCalendar.getTime()));
-    }
 
 
     private Vector<Integer> ImageEyeToCode(Bitmap inputEye){
@@ -359,5 +349,27 @@ public class Add_user_Control extends AppCompatActivity  {
     protected void onPause() {
         super.onPause();
         CloseDrawer(drawerLayout);
+    }
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener(){
+
+        //callback received when the user sets the date in the datePickerDialog
+        @Override
+        public void onDateSet(DatePicker view, int yearSelected, int monthOfYear, int dayOfMonth) {
+            int year=yearSelected;
+            int month=monthOfYear;
+            int day=dayOfMonth;
+            // Set the selected Date on Text
+            Birthday.setText(day+"/"+month+"/"+year);
+        }
+    };
+
+    protected Dialog onCreateDialog(int id)
+    {
+        switch (id) {
+            case 1100:
+                return new DatePickerDialog(this, mDateSetListener, 2020, 15, 10);
+            }
+        return null;
     }
 }

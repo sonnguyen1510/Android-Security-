@@ -1,5 +1,6 @@
 #include <jni.h>
 #include <string>
+#include <opencv2/imgproc/imgproc_c.h>
 #include "FunctionAndVariable.h"
 
 
@@ -28,7 +29,7 @@ Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_DetectIris(JN
     //cvtColor(original, original, COLOR_BGR2GRAY);
     //output = returnImageTest(original); //findAndExtractIris(currentImage, unprocessed, original);
     //output = findAndExtractIris(currentImage, unprocessed, original);
-    output = findAndExtractIris(original);
+    output = Segmentation(original);
     outputNormalized = normalize(output);
     /*
      Mat unprocessed = currentImage.clone();
@@ -114,7 +115,7 @@ Mat findIris( Mat original)
 
     GaussianBlur(processed, processed, Size(9, 9), 3, 3);
 
-    Canny(processed,processed,50, 200, 3, false);
+    //Canny(processed,processed,50, 200, 3, false);
     //Find the circles
     //vector<int> circle = CHT(processed, 10, 30);
     vector<Vec3f> circles;
@@ -143,6 +144,74 @@ Mat findIris( Mat original)
     }
 
     return original;
+}
+
+Mat Segmentation( Mat original)
+{
+    Mat processed;
+    Mat mask1 = cv::Mat::zeros(original.rows,original.cols,CV_8UC1);
+    Mat mask2 = cv::Mat::zeros(original.rows,original.cols,CV_8UC1);
+    //cvtColor(unprocessed, unprocessed, CV_BGR2GRAY);
+    cvtColor(original, processed, CV_BGR2GRAY);
+
+    threshold(processed, processed, 90, 255, THRESH_BINARY_INV);
+    //processed = fillHoles(processed);
+
+
+    GaussianBlur(processed, processed, Size(9, 9), 3, 3);
+
+    //Canny(processed,processed,50, 200, 3, false);
+    //Find the circles
+    //vector<int> circle = CHT(processed, 10, 30);
+    vector<Vec3f> circles;
+    Mat mask;
+    Point center;
+    HoughCircles(processed, circles, CV_HOUGH_GRADIENT, 1, original.rows / 16, 100, 30, 0, 0);
+    if (circles.size() == 0)
+        original.release();
+    for (size_t i = 0; i < 1; i++) //Check first circle found
+    {
+        center.x =Round(circles[i][0]),center.y = Round(circles[i][1]);
+        pupilx = Round(circles[i][0]), pupily = Round(circles[i][1]);
+        //Normal
+        if (Round(circles[i][2]) > 60)
+        {
+            pupilRadius = Round(circles[i][2])/2;
+            irisRadius = Round(circles[i][2]);
+            //findIrisRadius(original, center, pupilRadius);
+        }
+        else //Brown eyes
+        {
+            irisRadius = Round(circles[i][2]*2);
+            pupilRadius = Round(circles[i][2]);
+        }
+        circle(mask1, center, pupilRadius, Scalar(255,255,255), -1);
+        circle(mask2, center, irisRadius, Scalar(255,255,255), -1);
+
+    }
+    mask = mask2 - mask1;
+
+
+    Mat result;
+    //cvtColor(original,result,COLOR_BGR2BGRA);
+    original.copyTo(result,mask);
+    //cv::Mat roi(result, cv::Rect( center.x-irisRadius, center.y-irisRadius, original.size().width-irisRadius*2, original.size().width-irisRadius*2 ) );
+    // Create rects representing the image and the ROI
+    auto image_rect = cv::Rect({}, result.size());
+    auto roi = cv::Rect(center.x-irisRadius, center.y-irisRadius, irisRadius*2, irisRadius*2 );
+
+    // Find intersection, i.e. valid crop region
+    auto intersection = image_rect & roi;
+
+    // Move intersection to the result coordinate space
+    auto inter_roi = intersection - roi.tl();
+
+    // Create black image and copy intersection
+    cv::Mat crop = cv::Mat::zeros(roi.size(), result.type());
+    result(intersection).copyTo(crop(inter_roi));
+
+
+    return crop;
 }
 
 int Round(double x){
@@ -358,4 +427,19 @@ Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_FindIris(JNIE
     Mat& outputMat = *(Mat*)addr_output;
 
     outputMat = findIris(inputMat);
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_Segmentation(JNIEnv *env,
+                                                                                jclass clazz,
+                                                                                jlong addr_input,
+                                                                                jlong addr_output) {
+    Mat& inputMat = *(Mat*)addr_input;
+    Mat& outputMat = *(Mat*)addr_output;
+
+    //Mat output
+    outputMat  =Segmentation(inputMat);
+
+    //outputMat = normalize(output);
+
 }

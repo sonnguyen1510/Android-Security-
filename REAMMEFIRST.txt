@@ -11,10 +11,18 @@ Install mongoose : $ npm install mongoose
 *Postman(check API)
 
 ----------------------ANDROID--------------------------
-Download OpenCV :
+Download OpenCV :https://sourceforge.net/projects/opencvlibrary/files/3.4.16/opencv-3.4.16-android-sdk.zip/download
+
 Install : 
 	-NKD and CMAKE in SDK manager 
 
 Check:
 	-Add CDK(android download resource) to environment computer path
 
+Import:
+-Import all eye image in EyeImage folder to image capture (Vitural device)
+
+-------------------------------CHECK APP----------------------------------------------------------------------------------
+Admin:
+Tk:sonnguyen15
+MK:1234567890
