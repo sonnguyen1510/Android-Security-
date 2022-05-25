@@ -19,11 +19,9 @@ import android.widget.Toast;
 import com.example.IrisREC.Data.APIService.UserCall;
 import com.example.IrisREC.Function.FunctionImplement;
 import com.example.IrisREC.Function.IrisFunctionImplement;
-import com.example.IrisREC.Function.NativeFunctionCall_IrisFunction;
 import com.example.IrisREC.Object.User;
 import com.example.IrisREC.R;
 
-import org.bytedeco.libfreenect2.Freenect2Device;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
@@ -31,7 +29,6 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.Rect;
 
 
 import java.io.FileNotFoundException;
@@ -173,11 +170,11 @@ public class Check_iris_recognition_Control extends AppCompatActivity {
 
 
 
-                //Localization iris
+                //Iris Localization
                 Bitmap Localization = IrisFunctionImplement.IrisLocalization(EyeInputData);
                 IrisLocalization.setImageBitmap(Localization);
 
-                //Localization iris
+                //Iris Normalization
                 Bitmap Normalization = IrisFunctionImplement.IrisNormalization(EyeInputData);
                 IrisNomalization.setImageBitmap(Normalization);
 
@@ -198,7 +195,7 @@ public class Check_iris_recognition_Control extends AppCompatActivity {
                         //Log.e("User name",UserCheck.getName());
                         UserID = UserCheck.get_id();
                         IsUserExist = true;
-                        Intent ShowUserInformation = new Intent(this,Show_UserIFormation_Control.class);
+                        Intent ShowUserInformation = new Intent(this, Show_UserInformation_Control.class);
                         ShowUserInformation.putExtra("UserIdIris",UserID);
                         startActivity(ShowUserInformation);
                     }
@@ -230,16 +227,4 @@ public class Check_iris_recognition_Control extends AppCompatActivity {
 
     }
 
-    //Loads data into the userdb object from file
-    public void loadUserDatabase()
-    {
-        try
-        {
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
 }

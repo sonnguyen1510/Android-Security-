@@ -28,27 +28,30 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Show_UserIFormation_Control extends AppCompatActivity {
-
+public class Show_UserInformation_Control extends AppCompatActivity {
+    //Base information
     public TextView Name;
     public TextView Email;
     public TextView Birthday;
     public TextView Age;
     public TextView Gender;
-
+    public ImageView ImageEye;
+    //Edit button
     public Button Delete;
     public Button Disable;
     public static String  UserID;
     public User UserData;
     //Show iris formation
-    public ImageView ImageEye;
     public RelativeLayout Iris_Information;
-    public LinearLayout EditButton;
+    public LinearLayout EditButtons;
     //Show image information
     public ImageView Iris_Segmentation;
     public ImageView Iris_Normalization;
+    public ImageView Iris_Canny;
+    public ImageView Iris_Gaussian;
+    public ImageView Iris_Detect;
 
-
+    //Load opencv
     static
     {
         if (OpenCVLoader.initDebug())
@@ -57,7 +60,7 @@ public class Show_UserIFormation_Control extends AppCompatActivity {
             Log.i(TAG, "OpenCV load failed.");
     }
 
-    //Loads opencv and nativelib
+    //Loads opencv and native lib
     static
     {
         System.loadLibrary("native-lib");
@@ -78,17 +81,20 @@ public class Show_UserIFormation_Control extends AppCompatActivity {
         Gender = findViewById(R.id.User_Gender);
         //Show iris information
         Iris_Information = findViewById(R.id.IrisInformation);
-        EditButton = findViewById(R.id.Show_user_form_button);
+        EditButtons = findViewById(R.id.Show_user_form_button);
         //Image Iris
         Iris_Segmentation = findViewById(R.id.iris_information_Segmentation);
         Iris_Normalization = findViewById(R.id.iris_information_Normalization);
-
+        Iris_Canny = findViewById(R.id.iris_information_Canny);
+        Iris_Gaussian = findViewById(R.id.iris_information_GaussianBlur);
+        Iris_Detect = findViewById(R.id.iris_information_Iris);
         //Get User data
         UserID = getIntent().getStringExtra("UserIdIris");
         //Log.e("UserIDIris",UserID);
 
         //Custom layout
-        EditButton.setVisibility(View.GONE);
+
+        EditButtons.setVisibility(View.GONE);
         Iris_Information.setVisibility(View.VISIBLE);
         //------------------------------------SHOW INFORMATION---------------------------------------
 
@@ -116,8 +122,13 @@ public class Show_UserIFormation_Control extends AppCompatActivity {
                 ImageEye.setImageBitmap(ShowImageEye);
 
                 //Image
-
+                //Localization
+                Iris_Canny.setImageBitmap(IrisFunctionImplement.IrisCanny(ShowImageEye));
+                Iris_Canny.setImageBitmap(IrisFunctionImplement.IrisGaussian(ShowImageEye));
+                Iris_Detect.setImageBitmap(IrisFunctionImplement.findIris(ShowImageEye));
+                //Segmentation
                 Iris_Segmentation.setImageBitmap(IrisFunctionImplement.IrisLocalization(ShowImageEye));
+                //Normalization
                 Iris_Normalization.setImageBitmap(IrisFunctionImplement.IrisNormalization(ShowImageEye));
 
 

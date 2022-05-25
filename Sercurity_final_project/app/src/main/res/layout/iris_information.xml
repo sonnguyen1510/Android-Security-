@@ -47,13 +47,14 @@
         android:src="@drawable/ic_launcher_background"
         >
     </ImageView>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginStart="17dp"
-        android:textSize="17dp"
-        android:text="I.1 Canny">
+        android:layout_marginTop="5dp"
+        android:text="I.3 Detect Iris"
+        android:textSize="17dp">
 
     </TextView>
     <ImageView

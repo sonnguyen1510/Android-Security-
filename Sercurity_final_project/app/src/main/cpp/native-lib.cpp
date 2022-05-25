@@ -1,6 +1,6 @@
 #include <jni.h>
 #include <string>
-#include "Source.h"
+#include "FunctionAndVariable.h"
 
 
 using namespace std;
@@ -100,6 +100,51 @@ Mat findAndExtractIris( Mat original)
 
     return original;
 }
+
+//The function that finds the pupil and iris
+Mat findIris( Mat original)
+{
+    Mat processed;
+    //cvtColor(unprocessed, unprocessed, CV_BGR2GRAY);
+    cvtColor(original, processed, CV_BGR2GRAY);
+
+    threshold(processed, processed, 90, 255, THRESH_BINARY_INV);
+    //processed = fillHoles(processed);
+
+
+    GaussianBlur(processed, processed, Size(9, 9), 3, 3);
+
+    Canny(processed,processed,50, 200, 3, false);
+    //Find the circles
+    //vector<int> circle = CHT(processed, 10, 30);
+    vector<Vec3f> circles;
+    HoughCircles(processed, circles, CV_HOUGH_GRADIENT, 1, original.rows / 16, 100, 30, 0, 0);
+    if (circles.size() == 0)
+        original.release();
+    for (size_t i = 0; i < 1; i++) //Check first circle found
+    {
+        Point center(Round(circles[i][0]), Round(circles[i][1]));
+        pupilx = Round(circles[i][0]), pupily = Round(circles[i][1]);
+        //Normal
+        if (Round(circles[i][2]) > 60)
+        {
+            pupilRadius = Round(circles[i][2])/2;
+            irisRadius = Round(circles[i][2]);
+            //findIrisRadius(original, center, pupilRadius);
+        }
+        else //Brown eyes
+        {
+            irisRadius = Round(circles[i][2]*2);
+            pupilRadius = Round(circles[i][2]);
+        }
+        circle(original, center, pupilRadius, Scalar(255,0,0), 2, 8, 0);
+        circle(original, center, irisRadius, Scalar(0,0,255), 2, 8, 0);
+
+    }
+
+    return original;
+}
+
 int Round(double x){
     int y;
     if(x >= (int)x+0,5)
@@ -271,9 +316,9 @@ Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_PrintMat(JNIE
                                                                             jclass clazz,
                                                                             jlong addr_input,jlong addr_output) {
     Mat& currentImage = *(Mat*)addr_input;
-    Mat& ouput = *(Mat*)addr_output;
+    Mat& output = *(Mat*)addr_output;
 
-    ouput = currentImage;
+    output = currentImage;
 
 
 }
@@ -301,4 +346,16 @@ Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_Canny(JNIEnv 
     Mat& outputMat = *(Mat*)addr_output;
 
     Canny(inputMat,outputMat,50, 200, 3, false);
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_FindIris(JNIEnv *env,
+                                                                            jclass clazz,
+                                                                            jlong addr_input,
+                                                                            jlong addr_output) {
+    Mat& inputMat = *(Mat*)addr_input;
+    Mat& outputMat = *(Mat*)addr_output;
+
+    outputMat = findIris(inputMat);
 }

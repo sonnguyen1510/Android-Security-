@@ -325,10 +325,10 @@ public class Add_user_Control extends AppCompatActivity  {
 
     private boolean Gender() {
         if(IsFemale.isChecked()){
-            return false;
+            return true;
         }
         else
-            return true;
+            return false;
     }
 
     private boolean IsFullInformation(){

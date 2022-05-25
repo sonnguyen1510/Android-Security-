@@ -18,6 +18,7 @@ import com.example.IrisREC.Object.Admin;
 import com.example.IrisREC.Object.User;
 import com.example.IrisREC.R;
 import com.example.IrisREC.View.UserList.View.UserList_RecycleView_Adapter;
+import com.example.IrisREC.View.UserList.ObjectView.RecyclerTouchListener;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
@@ -39,6 +40,7 @@ public class Main_form_control extends AppCompatActivity {
     public TextView AdminName;
     public DrawerLayout drawerLayout;
     public Activity context = this;
+    public static String AdminID;
     //User list
     public RecyclerView User_list;
     public List<User> UserData;
@@ -50,8 +52,8 @@ public class Main_form_control extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_form);
-        String AdminID = getIntent().getStringExtra("Admin Id");
-        Log.e("Admin id" , AdminID);
+        AdminID = getIntent().getStringExtra("Admin Id");
+        //Log.e("Admin id" , AdminID);
         AdminName = findViewById(R.id.Admin_name);
 
         //AdminName = findViewById(R.id.Admin_name);
@@ -150,6 +152,25 @@ public class Main_form_control extends AppCompatActivity {
                 adapter = new UserList_RecycleView_Adapter(UserData,context);
                 User_list.setAdapter(adapter);
                 User_list.setLayoutManager(new LinearLayoutManager(context));
+                User_list.addOnItemTouchListener(new RecyclerTouchListener(context, User_list, new RecyclerTouchListener.ClickListener() {
+                    @Override
+                    public void onClick(View view, int position) {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("User Id",UserData.get(position).get_id());
+                        bundle.putString("Admin Id", AdminID);
+
+                        Intent UserInformation = new Intent(context,UserInformation_Control.class);
+                        UserInformation.putExtras(bundle);
+                        startActivity(UserInformation);
+
+                    }
+
+                    @Override
+                    public void onLongClick(View view, int position) {
+
+                    }
+                }));
 
             }
 

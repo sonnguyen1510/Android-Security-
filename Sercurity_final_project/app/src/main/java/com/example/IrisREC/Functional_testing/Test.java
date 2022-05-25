@@ -1,4 +1,4 @@
-package com.example.IrisREC.TestFunctional;
+package com.example.IrisREC.Functional_testing;
 
 import static com.example.IrisREC.UI_Control.Check_iris_recognition_Control.IRISRECOGNITION_LOADIMG_REQUESTCODE;
 //import static com.example.IrisREC.UI_Control.Check_iris_recognition_Control.JNIReturn;

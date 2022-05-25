@@ -39,16 +39,30 @@ const UserController = {
     
     DeleteUserbyID : async(req,res) =>{
         try {
-            const UserDeleted = await User.DeleteUserbyID(req.params.UserID)
+            await User.findByIdAndDelete(req.params.ID)
             res.json({
-                Success : true ,
-                DataDelete  : UserDeleted
+                Success : true
+                
             })
         } catch (error) {
             console.log("Delete user fail")
-            req.status(404).send("Not Found")
+            
+        }
+    },
+
+    DeleteAllUser : async(req,res) =>{
+        try {
+            await User.deleteMany()
+            res.json({
+                Success : true
+                
+            })
+        } catch (error) {
+            console.log("Delete user fail")
+            
         }
     }
+
 }
 
 module.exports = UserController

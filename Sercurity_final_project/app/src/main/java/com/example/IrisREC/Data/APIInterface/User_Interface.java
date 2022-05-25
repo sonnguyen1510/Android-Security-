@@ -29,5 +29,9 @@ public interface    User_Interface {
     //Delete User
     @DELETE("api/v1/User/delete/{Id}")
     Call<User> DeleteAUser(@Path("Id") String id);
+
+    //Delete All User
+    @DELETE("api/v1/User/delete_all")
+    Call<User> DeleteAllUser();
 }
 

@@ -70,7 +70,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:startIconDrawable="@drawable/ic_baseline_email_24">
+                    app:startIconDrawable="@drawable/ic_baseline_supervised_user_circle_24">
 
                     <EditText
                         android:id="@+id/Name_input"
@@ -147,7 +147,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
 
-                    app:startIconDrawable="@drawable/ic_baseline_birthday_24">
+                    app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
                     <EditText
                         android:id="@+id/Birthday_input"
@@ -196,7 +196,7 @@
                         android:id="@+id/add_user_imageEye"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher">
+                        android:src="@drawable/ic_launcher_background">
 
                     </ImageView>
 

@@ -18,6 +18,7 @@ using namespace cv;
 Mat findAndExtractIris( Mat original);
 int findIrisRadius(Mat input , Point startPoint, int radius);
 Mat fillHoles(Mat input);
+Mat findIris( Mat original);
 Mat normalize(Mat input);
 vector<int> CHT(Mat input, int minRadius, int maxRadius);
 

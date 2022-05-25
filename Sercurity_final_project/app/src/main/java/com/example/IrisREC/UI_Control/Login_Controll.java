@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -65,11 +66,11 @@ public class Login_Controll extends AppCompatActivity {
                             //----------------------------------------POPUP SETTING----------------------------------------
                             //Show popup window when login fail
                             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                            View LoginFailPopUp = inflater.inflate(R.layout.login_popup_window,null);
+                            View LoginFailPopUp = inflater.inflate(R.layout.login_popup_window,(ViewGroup) findViewById(R.id.Login_Form));
 
                             int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                             int Height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                            boolean Focusable = true;
+                            boolean Focusable = false;
 
                             final PopupWindow LoginFailPopUpWindow = new PopupWindow(LoginFailPopUp,width,Height,Focusable);
                             LoginFailPopUpWindow.showAtLocation(view, Gravity.CENTER,0,0);

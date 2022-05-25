@@ -124,7 +124,26 @@ public class IrisFunctionImplement implements IrisFunctionInterface {
         NativeFunctionCall_IrisFunction.Gaussian(InputEye.getNativeObjAddr(),IrisGaussian.getNativeObjAddr());
 
 
-        //Conver mat to bit map
+        //Convert mat to bit map
+        Bitmap OutputBB = Bitmap.createBitmap(IrisGaussian.cols(),IrisGaussian.rows(),Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(IrisGaussian,OutputBB);
+
+        return OutputBB;
+    }
+
+    public static Bitmap findIris(Bitmap input){
+        //Convert bitmap input to ARGB type
+        Bitmap ARGBBitmap= FunctionImplement.ARGBBitmap(input);
+        //Convert to Mat
+        Mat InputEye = new Mat(ARGBBitmap.getWidth(), ARGBBitmap.getHeight(), CvType.CV_8UC1);
+        Utils.bitmapToMat(ARGBBitmap,InputEye);
+
+        //Gaussian
+        Mat IrisGaussian = new Mat();
+        NativeFunctionCall_IrisFunction.FindIris(InputEye.getNativeObjAddr(),IrisGaussian.getNativeObjAddr());
+
+
+        //Convert mat to bit map
         Bitmap OutputBB = Bitmap.createBitmap(IrisGaussian.cols(),IrisGaussian.rows(),Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(IrisGaussian,OutputBB);
 
