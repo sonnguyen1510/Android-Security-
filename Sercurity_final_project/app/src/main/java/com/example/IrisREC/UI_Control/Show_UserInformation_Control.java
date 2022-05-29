@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -116,11 +115,10 @@ public class Show_UserInformation_Control extends AppCompatActivity {
                 Age.setText(UserData.getAge()+"");
 
                 if(UserData.isGender()){
-                    Gender.setText("Male");
-
+                    Gender.setText("Female");
                 }
                 else
-                    Gender.setText("Female");
+                    Gender.setText("Male");
                 Bitmap ShowImageEye = FunctionImplement.ConvertStringBase64ToBitMap(UserData.getImageEye());
                 ImageEye.setImageBitmap(ShowImageEye);
 
@@ -128,7 +126,7 @@ public class Show_UserInformation_Control extends AppCompatActivity {
                 //Localization
                 Iris_Canny.setImageBitmap(IrisFunctionImplement.IrisCanny(ShowImageEye));
                 Iris_Gaussian.setImageBitmap(IrisFunctionImplement.IrisGaussian(ShowImageEye));
-                Iris_Detect.setImageBitmap(IrisFunctionImplement.findIris(ShowImageEye));
+                Iris_Detect.setImageBitmap(IrisFunctionImplement.Localization(ShowImageEye));
                 //Segmentation
                 Iris_Segmentation.setImageBitmap(IrisFunctionImplement.IrisSegmentation(ShowImageEye));
                 //Normalization

@@ -46,16 +46,7 @@ import retrofit2.Response;
 
 public class Check_iris_recognition_Control extends AppCompatActivity {
 
-    private Mat frameIn;
-    private Mat frameOut;
-    private Mat eyeCircleSelection;
-    public static Mat JNIReturn;
-    private Mat JNIReturnNormalized;
-    private int framesPassed;
-    private Vector<Integer> irisCodeInput = new Vector<>();
-    private boolean IRISRECOGNITION = false;
     private static String TAG = "AuthenticateActivity";
-    private static JavaCameraView jcv;
     private int [] histogramValues = {0, 1, 2, 3, 4, 6, 7, 8, 12, 14, 15, 16, 24, 28, 30, 31, 32, 48, 56, 60, 62, 63, 64, 96, 112, 120, 124, 126, 127, 128, 129, 131, 135, 143, 159, 191, 192, 193, 195, 199, 207, 223, 224, 225, 227, 231, 239, 240, 241, 243, 247, 248, 249, 251, 252, 253, 254, 255};
     public final static int IRISRECOGNITION_LOADIMG_REQUESTCODE = 323;
 
@@ -134,18 +125,7 @@ public class Check_iris_recognition_Control extends AppCompatActivity {
         }
     });
 
-        //load  openCv library
-        //Loader.load(opencv_java.class);
-
-        if (OpenCVLoader.initDebug())
-        {
-            Log.i(TAG, "OpenCV loaded successfully.");
-            mLoader.onManagerConnected(LoaderCallbackInterface.SUCCESS);
-        } else
-        {
-            Log.i(TAG, "OpenCV load failed.");
-            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_2_0, this, mLoader);
-        }
+        
         Back_To_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,11 +167,11 @@ public class Check_iris_recognition_Control extends AppCompatActivity {
 
                 //Iris Localization
                 Bitmap Localization = IrisFunctionImplement.IrisLocalization(EyeInputData);
-                IrisLocalization.setImageBitmap(Localization);
+                IrisLocalization.setImageBitmap(EyeInputData);
 
                 //Iris Normalization
                 Bitmap Normalization = IrisFunctionImplement.IrisNormalization(EyeInputData);
-                IrisNomalization.setImageBitmap(Normalization);
+                //IrisNomalization.setImageBitmap(Normalization);
 
                 //Decode Iris
                 Mat NormalizationMat = new Mat(Normalization.getWidth(), Normalization.getHeight(), CvType.CV_8UC1);

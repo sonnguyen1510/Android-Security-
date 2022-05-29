@@ -15,13 +15,16 @@ using namespace std;
 using namespace cv;
 
 /** Function Headers */
-Mat findAndExtractIris( Mat original);
+Mat ExtractIris(Mat original);
 int findIrisRadius(Mat input , Point startPoint, int radius);
 Mat fillHoles(Mat input);
-Mat findIris( Mat original);
+Mat Localization(Mat original);
 Mat Segmentation( Mat original);
 Mat normalize(Mat input);
+Mat Normalize_iris(Mat input , Point iris , int iRadius , int pRadius);
 vector<int> CHT(Mat input, int minRadius, int maxRadius);
+
+double DegreesToRadians(double degrees);
 
 /** Global variables */
 string window = "Output";

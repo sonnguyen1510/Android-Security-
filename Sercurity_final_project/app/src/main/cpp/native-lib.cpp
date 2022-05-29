@@ -7,7 +7,7 @@
 using namespace std;
 
 
-//Mat findAndExtractIris(Mat input, Mat unprocessed, Mat original);
+//Mat ExtractIris(Mat input, Mat unprocessed, Mat original);
 //int findIrisRadius(Mat input , Point startPoint, int radius);
 //Mat fillHoles(Mat input);
 //Mat normalize(Mat input);
@@ -16,25 +16,28 @@ Mat returnImageTest(Mat img);
 int Round(double x);
 extern "C"
 void JNICALL
-Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_DetectIris(JNIEnv *env, jobject instance,jlong addrInput, jlong addrOutput, jlong addrOutputNormalized, jlong addrOriginal)
+Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_DetectIris(JNIEnv *env, jobject instance, jlong addrOutput, jlong addrOutputNormalized, jlong addrOriginal)
 {
     //Mat& currentImage = *(Mat*)addrInput;
     Mat& output = *(Mat*)addrOutput;
     Mat& outputNormalized = *(Mat*)addrOutputNormalized;
     Mat& original = *(Mat*)addrOriginal;
 
-    //Mat unprocessed = currentImage.clone();
-
-
-    //cvtColor(original, original, COLOR_BGR2GRAY);
-    //output = returnImageTest(original); //findAndExtractIris(currentImage, unprocessed, original);
-    //output = findAndExtractIris(currentImage, unprocessed, original);
-    output = Segmentation(original);
+    //Detect and extract iris
+    output = ExtractIris(original);
+    //Get normalized image
     outputNormalized = normalize(output);
+
+
+    //Mat unprocessed = currentImage.clone();
+    //cvtColor(original, original, COLOR_BGR2GRAY);
+    //output = returnImageTest(original); //ExtractIris(currentImage, unprocessed, original);
+    //output = ExtractIris(currentImage, unprocessed, original);
+
     /*
      Mat unprocessed = currentImage.clone();
     cvtColor(currentImage, currentImage, COLOR_BGR2GRAY);
-    output = findAndExtractIris(currentImage, unprocessed, original);
+    output = ExtractIris(currentImage, unprocessed, original);
     outputNormalized = normalize(output);
     unprocessed.release();
      * */
@@ -42,24 +45,8 @@ Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_DetectIris(JN
 }
 
 
-
-Mat returnImageTest(Mat img){
-    Mat processed;
-
-    cvtColor(img, img, CV_BGR2GRAY);
-
-    threshold(img, processed, 90, 255, THRESH_BINARY_INV);
-    processed = fillHoles(img);
-
-
-
-    GaussianBlur(processed, processed, Size(9, 9), 3, 3);
-
-    return processed;
-}
-
 //The function that finds the pupil and iris
-Mat findAndExtractIris( Mat original)
+Mat ExtractIris(Mat original)
 {
     Mat processed;
     //cvtColor(unprocessed, unprocessed, CV_BGR2GRAY);
@@ -71,16 +58,17 @@ Mat findAndExtractIris( Mat original)
 
     GaussianBlur(processed, processed, Size(9, 9), 3, 3);
 
-    Canny(processed,processed,50, 200, 3, false);
+    //Canny(processed,processed,50, 200, 3, false);
     //Find the circles
     //vector<int> circle = CHT(processed, 10, 30);
     vector<Vec3f> circles;
+    Point center;
     HoughCircles(processed, circles, CV_HOUGH_GRADIENT, 1, original.rows / 16, 100, 30, 0, 0);
     if (circles.size() == 0)
         original.release();
     for (size_t i = 0; i < 1; i++) //Check first circle found
     {
-        Point center(Round(circles[i][0]), Round(circles[i][1]));
+        center.x = Round(circles[i][0]), center.y = Round(circles[i][1]);
         pupilx = Round(circles[i][0]), pupily = Round(circles[i][1]);
         //Normal
         if (Round(circles[i][2]) > 60)
@@ -98,12 +86,13 @@ Mat findAndExtractIris( Mat original)
         circle(original, center, irisRadius, Scalar(0), 2, 8, 0);
 
     }
+    //Mat Normalize = Normalize_iris(original,center,irisRadius,pupilRadius);
 
     return original;
 }
 
 //The function that finds the pupil and iris
-Mat findIris( Mat original)
+Mat Localization(Mat original)
 {
     Mat processed;
     //cvtColor(unprocessed, unprocessed, CV_BGR2GRAY);
@@ -115,7 +104,7 @@ Mat findIris( Mat original)
 
     GaussianBlur(processed, processed, Size(9, 9), 3, 3);
 
-    //Canny(processed,processed,50, 200, 3, false);
+    Canny(processed,processed,50, 200, 3, false);
     //Find the circles
     //vector<int> circle = CHT(processed, 10, 30);
     vector<Vec3f> circles;
@@ -325,7 +314,10 @@ Mat fillHoles(Mat input)
     return (thresholded | floodfilled);
 }
 
+
+
 //Normalize the circular shape to the rectangular shape
+//Daugman rubber sheet model
 Mat normalize(Mat input) {
     int yNew = 360;
     int xNew = 100;
@@ -355,6 +347,35 @@ Mat normalize(Mat input) {
     return normalized;
 }
 
+//
+
+Mat Normalize_iris(Mat input , Point iris , int iRadius , int pRadius){
+    int iris_width = iRadius - pRadius;
+    int KEY_WIDTH = 320;
+    int KEY_HEIGHT = 60;
+    Mat normalized = Mat(KEY_HEIGHT,KEY_WIDTH, CV_8U, Scalar(255));
+    double i,j;
+    for( i = 0 ; i < KEY_WIDTH;i++){
+        double radians = DegreesToRadians(i*360/KEY_WIDTH + 1);
+        for(j = 0 ; j< KEY_HEIGHT;j++){
+            double r = pRadius + ((iris_width)*(j+1))/KEY_HEIGHT;
+            int x = (int) (iris.x +r*sin(radians));
+            int y = (int) (iris.y +r*cos(radians));
+            try{
+                normalized.at<uchar>(j, i) = input.at<uchar>(y, x);
+            }
+            catch(const std::exception &exc){
+                std::cout << "Crash here :" << exc.what();
+            }
+        }
+    }
+
+    return  normalized;
+}
+
+double DegreesToRadians(double degrees) {
+    return degrees * (PI / 180);
+}
 
 /*
  #include <jni.h>
@@ -426,7 +447,7 @@ Java_com_example_IrisREC_Function_NativeFunctionCall_1IrisFunction_FindIris(JNIE
     Mat& inputMat = *(Mat*)addr_input;
     Mat& outputMat = *(Mat*)addr_output;
 
-    outputMat = findIris(inputMat);
+    outputMat = Localization(inputMat);
 }
 extern "C"
 JNIEXPORT void JNICALL

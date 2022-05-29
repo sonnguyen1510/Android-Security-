@@ -92,11 +92,10 @@ public class UserInformation_Control extends AppCompatActivity {
                 Birthday.setText(UserData.getBirthday()+"");
                 Age.setText(UserData.getAge()+"");
                 if(UserData.isGender()){
-                    Gender.setText("Male");
-
+                    Gender.setText("Female");
                 }
                 else
-                    Gender.setText("Female");
+                    Gender.setText("Male");
 
                 ImageEye.setImageBitmap(FunctionImplement.ConvertStringBase64ToBitMap(UserData.getImageEye()));
             }

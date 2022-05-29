@@ -119,9 +119,9 @@ public class Test extends AppCompatActivity {
                 Bitmap Eye_data =FunctionImplement.ARGBBitmap(BitmapFactory.decodeStream(imageStream));
                 Mat input = FunctionImplement.ConvertBitmapToMat(Eye_data);
                 Mat output = new Mat();
-                NativeFunctionCall_IrisFunction.Segmentation(input.getNativeObjAddr(),output.getNativeObjAddr());
-
-                Log.e("Encode",EncodeIM(IrisFunctionImplement.Encode(IrisFunctionImplement.IrisNormalization_ToMat(Eye_data))));
+                Mat outputLocal = new Mat();
+                output = IrisFunctionImplement.IrisNormalization_ToMat(Eye_data);
+                //Log.e("Encode",EncodeIM(IrisFunctionImplement.Encode(IrisFunctionImplement.IrisNormalization_ToMat(Eye_data))));
 
                 IrisCrop.setImageBitmap(FunctionImplement.ConvertMatToBitmap(output));
 

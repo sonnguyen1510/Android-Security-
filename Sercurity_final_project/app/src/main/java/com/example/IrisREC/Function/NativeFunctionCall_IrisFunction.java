@@ -35,5 +35,5 @@ public class NativeFunctionCall_IrisFunction {
 
     public native static void PrintMat(long addrInput , long addrOutput);
 
-    public native static void DetectIris(long addrInput, long addrOutput, long addrOutputNormalized, long addrOriginal);
+    public native static void DetectIris( long addrOutput, long addrOutputNormalized, long addrOriginal);
 }

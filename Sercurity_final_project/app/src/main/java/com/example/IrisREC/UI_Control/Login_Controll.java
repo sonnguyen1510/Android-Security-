@@ -47,11 +47,7 @@ public class Login_Controll extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Log In Check
-                String IsLogInMoreThanOne = getIntent().getStringExtra("LogOut");
-                if(!(IsLogInMoreThanOne == null)){
-                    UserName.setText("");
-                    Password.setText("");
-                }
+
 
 
                 AdminCall.AdminCheck(
@@ -66,11 +62,11 @@ public class Login_Controll extends AppCompatActivity {
                             //----------------------------------------POPUP SETTING----------------------------------------
                             //Show popup window when login fail
                             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                            View LoginFailPopUp = inflater.inflate(R.layout.login_popup_window,(ViewGroup) findViewById(R.id.Login_Form));
+                            View LoginFailPopUp = inflater.inflate(R.layout.login_popup_window,null);
 
                             int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                             int Height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                            boolean Focusable = false;
+                            boolean Focusable = true;
 
                             final PopupWindow LoginFailPopUpWindow = new PopupWindow(LoginFailPopUp,width,Height,Focusable);
                             LoginFailPopUpWindow.showAtLocation(view, Gravity.CENTER,0,0);
@@ -88,6 +84,8 @@ public class Login_Controll extends AppCompatActivity {
                             Intent goToAdminForm = new Intent(view.getContext(),Main_form_control.class);
                             goToAdminForm.putExtra("Admin Id",admin_check.get_id());
                             view.getContext().startActivity(goToAdminForm);
+                            finish();
+
                         }
                     }
 
@@ -108,6 +106,7 @@ public class Login_Controll extends AppCompatActivity {
                 String Message = "Request_Iris_Check";
                 DirectToCheck_Iris.putExtra("IrisCheck",Message);
                 view.getContext().startActivity(DirectToCheck_Iris);
+                finish();
             }
         });
     }

@@ -48,7 +48,7 @@ public class IrisFunctionImplement implements IrisFunctionInterface {
         //Localization and Normalization
         Mat IrisLocal = new Mat();
         Mat IrisNormalize = new Mat();
-        NativeFunctionCall_IrisFunction.DetectIris(IrisLocal.getNativeObjAddr(),IrisLocal.getNativeObjAddr(),IrisNormalize.getNativeObjAddr(),InputEye.getNativeObjAddr());
+        NativeFunctionCall_IrisFunction.DetectIris(IrisLocal.getNativeObjAddr(),IrisNormalize.getNativeObjAddr(),InputEye.getNativeObjAddr());
 
         //Convert to bitmap
         Bitmap Localization = Bitmap.createBitmap(IrisLocal .cols(), IrisLocal .rows(), Bitmap.Config.ARGB_8888);
@@ -67,7 +67,7 @@ public class IrisFunctionImplement implements IrisFunctionInterface {
         //Localization and Normalization
         Mat IrisLocal = new Mat();
         Mat IrisNormalize = new Mat();
-        NativeFunctionCall_IrisFunction.DetectIris(IrisNormalize.getNativeObjAddr(),IrisLocal.getNativeObjAddr(),IrisNormalize.getNativeObjAddr(),InputEye.getNativeObjAddr());
+        NativeFunctionCall_IrisFunction.DetectIris(IrisLocal.getNativeObjAddr(),IrisNormalize.getNativeObjAddr(),InputEye.getNativeObjAddr());
 
         //Convert to bitmap
         Bitmap Normalization = Bitmap.createBitmap(IrisNormalize .cols(), IrisNormalize .rows(), Bitmap.Config.ARGB_8888);
@@ -86,7 +86,7 @@ public class IrisFunctionImplement implements IrisFunctionInterface {
         //Localization and Normalization
         Mat IrisLocal = new Mat();
         Mat IrisNormalize = new Mat();
-        NativeFunctionCall_IrisFunction.DetectIris(IrisNormalize.getNativeObjAddr(),IrisLocal.getNativeObjAddr(),IrisNormalize.getNativeObjAddr(),InputEye.getNativeObjAddr());
+        NativeFunctionCall_IrisFunction.DetectIris(IrisLocal.getNativeObjAddr(),IrisNormalize.getNativeObjAddr(),InputEye.getNativeObjAddr());
 
 
 
@@ -131,7 +131,7 @@ public class IrisFunctionImplement implements IrisFunctionInterface {
         return OutputBB;
     }
 
-    public static Bitmap findIris(Bitmap input){
+    public static Bitmap Localization(Bitmap input){
         //Convert bitmap input to ARGB type
         Bitmap ARGBBitmap= FunctionImplement.ARGBBitmap(input);
         //Convert to Mat
@@ -170,7 +170,7 @@ public class IrisFunctionImplement implements IrisFunctionInterface {
     }
 
 
-    //
+    //Using Gabor filter
     public static Vector<Integer> Encode(Mat input)
     {
         //Create NBP image
@@ -268,7 +268,11 @@ public class IrisFunctionImplement implements IrisFunctionInterface {
         return NBPcode;
     }
 
-    //Compare two iris
+    //Compare two iris using hamming distance
+    /**
+     **
+     *
+     */
     public static double hammingDistance(Vector<Integer> savedCode, Vector<Integer> inputCode)
     {
         int currentDistance = 0;
